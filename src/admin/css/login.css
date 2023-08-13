@@ -1,0 +1,28 @@
+.Login{
+    display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+    background-image: url("../../images/app_bg.jpeg");
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+h1{
+    padding: 10px;
+}
+#email, #password{
+    text-align: center;
+    font-size: 20px;
+    height: 50px;
+    width: 200px;
+    border-radius: 10px;
+    margin: 10px;
+}
+#submit{
+    font-size: 15px;
+    height: 40px;
+    width: 60px;
+    border-radius: 10px;
+    margin: 10px;
+    background-color: lightgreen;
+}

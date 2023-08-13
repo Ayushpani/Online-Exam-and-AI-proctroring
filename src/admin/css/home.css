@@ -1,0 +1,16 @@
+#logo{
+    height: 100px;
+    width: 500px;
+}
+#logo_caption{
+    font-weight: bolder;
+    font-size: 20px;
+    color: navy;
+}
+.test_button{
+    cursor: pointer;
+    width: 250px;
+}
+hr{
+    border: 1px solid black;
+}

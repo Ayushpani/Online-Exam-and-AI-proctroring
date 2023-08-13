@@ -1,0 +1,26 @@
+.App{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	background-image: url("./images/app_bg.jpeg");
+	background-size: cover;
+}
+.link{
+	text-decoration: none;
+}
+.login_btn{
+	text-decoration: none;
+	justify-content: center;
+	border-radius: 50px;
+	border-color: white;
+	cursor: pointer;
+	background-color: rgb(219, 236, 108);
+}
+.login_btn:hover{
+	text-align: center;
+	color: black;
+	font-size: 30px;
+	height: 70px;
+	width: 250px;
+}
