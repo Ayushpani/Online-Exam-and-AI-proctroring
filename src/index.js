@@ -8,6 +8,7 @@ import Signup from "./admin/Signup";
 import Uhome from "./user/home";
 import Ulogin from "./user/login";
 import Usignup from "./user/signup";
+import NewTest from "./admin/new_test"
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
@@ -23,6 +24,7 @@ root.render(
 				<Route path="/Ulogin" element={<Ulogin />} />
 				<Route path="/Usignup" element={<Usignup />} />
 				<Route path="/Uhome" element={<Uhome />} />
+				<Route path = "/Home/newTest" element = {<NewTest/>} />
 			</Routes>
 		</Router>
 	</React.StrictMode>

@@ -14,10 +14,16 @@ app.post("/", async(req, res) => {
     const{name,email, password} = req.body
 
     try{
-        const check = await collection.findOne({email: email})
+        const check = await collection.findOne({email: email});
 
         if(check){
-            res.json("exists")
+            const password_check = check ? check.password : 'User not found';
+            if(password_check == password){
+                res.json("exists");
+            }
+            else{
+                res.json("incorrect password");
+            }
         }
         else{
             res.json("not exist")

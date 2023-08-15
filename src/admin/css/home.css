@@ -1,15 +1,29 @@
+#nav{
+    background-color: rgb(131, 127, 127);
+}
+#nav_logo{
+    height: fit-content;
+    width: fit-content;
+    padding-top: 20px;
+    padding-left: 30px;
+    text-align: center;
+}
 #logo{
-    height: 100px;
-    width: 500px;
+    height: 50px;
+    width: 190px;
 }
 #logo_caption{
     font-weight: bolder;
-    font-size: 20px;
-    color: navy;
+    font-size: 15px;
+    color: white;
 }
 .test_button{
     cursor: pointer;
     width: 250px;
+    transition: background-color 1s;
+}
+.test_button:hover{
+    background-color: rgb(160, 160, 214);
 }
 hr{
     border: 1px solid black;

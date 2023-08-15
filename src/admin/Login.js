@@ -21,6 +21,9 @@ function Login() {
                 if(res.data == "exists"){
                     history("/Home", {state: {id: email}})
                 }
+                else if(res.data == "incorrect password"){
+                    alert("Incorrect Password")
+                }
                 else if(res.data == "not exist"){
                     alert("User has not signed up")
                 }
