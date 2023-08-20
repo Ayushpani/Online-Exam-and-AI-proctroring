@@ -1,0 +1,340 @@
+.navigationChild {
+  position: absolute;
+  top: 130px;
+  left: -3px;
+  border-top: 6px solid rgba(0, 0, 0, 0.6);
+  box-sizing: border-box;
+  width: 1514px;
+  height: 6px;
+}
+.whatsappImage20230820At1 {
+  position: relative;
+  width: 256px;
+  height: 103px;
+  object-fit: cover;
+}
+.home {
+  position: relative;
+}
+.test1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.test {
+  position: relative;
+  width: 62px;
+  height: 35px;
+  cursor: pointer;
+}
+.frame1 {
+  position: absolute;
+  top: 0;
+  left: 110px;
+  width: 763px;
+  height: 103px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 64px;
+}
+.navigation {
+  margin: 0;
+  position: relative;
+  width: 1508px;
+  height: 133px;
+  text-align: center;
+  font-size: var(--font-size-13xl);
+  color: var(--color-black);
+  font-family: var(--font-orelega-one);
+}
+.frame {
+  margin: 0;
+  position: absolute;
+  top: 47px;
+  left: -53px;
+  width: 1551px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+}
+.istockphoto1148585703612x612Icon {
+  position: absolute;
+  top: -5px;
+  left: -9px;
+  border-radius: var(--br-21xl) 0 0 0;
+  width: 375.84px;
+  height: 301px;
+  object-fit: cover;
+}
+.test11 {
+  position: absolute;
+  top: 25.5px;
+  left: 75.42px;
+  display: inline-block;
+  width: 207px;
+  height: 55px;
+}
+.istockphoto1148585703612x612Parent {
+  position: relative;
+  width: 357.84px;
+  height: 283px;
+}
+.istockphoto1148585703612x612Icon1 {
+  position: absolute;
+  top: -5px;
+  left: -9px;
+  width: 375.84px;
+  height: 301px;
+  object-fit: cover;
+}
+.test2 {
+  position: absolute;
+  top: 25.5px;
+  left: 124.42px;
+}
+.istockphoto1148585703612x612Group {
+  position: relative;
+  width: 357.84px;
+  height: 283px;
+}
+.istockphoto1148585703612x612Icon2 {
+  position: absolute;
+  top: -5px;
+  left: -9px;
+  border-radius: 0 var(--br-21xl) 0 0;
+  width: 375.84px;
+  height: 301px;
+  object-fit: cover;
+}
+.test3 {
+  position: absolute;
+  top: 25.5px;
+  left: 123.58px;
+}
+.istockphoto1148585703612x612Icon3 {
+  position: absolute;
+  top: -5px;
+  left: -9px;
+  border-radius: 0 0 0 var(--br-21xl);
+  width: 375.84px;
+  height: 301px;
+  object-fit: cover;
+}
+.test4,
+.test5 {
+  position: absolute;
+  top: 25.5px;
+  left: 123.26px;
+}
+.test5 {
+  left: 123.42px;
+}
+.istockphoto1148585703612x612Icon5 {
+  position: absolute;
+  top: -5px;
+  left: -9px;
+  border-radius: 0 0 var(--br-21xl) 0;
+  width: 375.84px;
+  height: 301px;
+  object-fit: cover;
+}
+.frame2,
+.frame3 {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+.frame3 {
+  border-radius: var(--br-21xl);
+  background-color: rgba(57, 161, 170, 0.3);
+  width: 1385px;
+  height: 764px;
+  flex-shrink: 0;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 66px 65px;
+  box-sizing: border-box;
+  align-items: center;
+  gap: 79px;
+}
+.frame2 {
+  position: absolute;
+  top: 286px;
+  left: 22px;
+  width: 1401px;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: center;
+  font-size: var(--font-size-21xl);
+  color: var(--color-black);
+  font-family: var(--font-orelega-one);
+}
+.examOnline1Icon {
+  position: undefined;
+  width: 350px;
+  height: 350px;
+  object-fit: cover;
+  margin-bottom: 0;
+}
+.onlineTestsAre {
+  margin: 0;
+}
+.onlineTestsAreContainer {
+  position: relative;
+  display: inline-block;
+  width: 795px;
+  height: 322px;
+  flex-shrink: 0;
+}
+.frame6 {
+  margin: 0;
+  width: 795px;
+  height: 350px;
+  flex-shrink: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+.frame4,
+.frame5,
+.frame6 {
+  overflow: hidden;
+  display: flex;
+}
+.frame5 {
+  width: 1268px;
+  height: 350px;
+  flex-shrink: 0;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 28px;
+}
+.frame4 {
+  position: absolute;
+  top: 1155px;
+  left: 59px;
+  width: 1369px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: left;
+  font-size: var(--font-size-5xl);
+  color: var(--color-black);
+  font-family: var(--font-otomanopee-one);
+}
+.facebookChild {
+  position: relative;
+  border-radius: 50%;
+  background-color: #bad9fd;
+  border: 2px solid #0500ff;
+  box-sizing: border-box;
+  width: 34px;
+  height: 35px;
+  z-index: 0;
+}
+.vectorIcon {
+  position: absolute;
+  margin: 0 !important;
+  top: calc(50% - 10.5px);
+  left: calc(50% - 6px);
+  width: 12px;
+  height: 22px;
+  z-index: 1;
+}
+.facebook,
+.twitterChild {
+  position: relative;
+  width: 34px;
+  height: 35px;
+}
+.facebook {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+.twitterChild {
+  border-radius: 50%;
+  background-color: var(--color-white);
+  border: 2px solid #0094ff;
+  box-sizing: border-box;
+  z-index: 0;
+}
+.vectorIcon1 {
+  position: absolute;
+  margin: 0 !important;
+  top: calc(50% - 8.5px);
+  left: calc(50% - 11px);
+  width: 21px;
+  height: 18px;
+  z-index: 1;
+}
+.instagramChild {
+  position: relative;
+  border-radius: 50%;
+  background: radial-gradient(50% 50%at 50% 50%, red 14.53%, #ff007a);
+  width: 34px;
+  height: 35px;
+  z-index: 0;
+}
+.frame8,
+.instagramIcon {
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.instagramIcon {
+  position: absolute;
+  margin: 0 !important;
+  top: calc(50% - 11.5px);
+  left: calc(50% - 12px);
+  width: 23px;
+  height: 24px;
+  z-index: 1;
+}
+.frame8 {
+  text-decoration: none;
+  width: 134px;
+  height: 36px;
+  display: flex;
+  flex-direction: row;
+  padding: 0 0 1px;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+}
+.frame7,
+.frameIcon {
+  position: absolute;
+  overflow: hidden;
+}
+.frame7 {
+  top: 1773px;
+  left: 17px;
+  width: 1411px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+}
+.frameIcon {
+  top: 1685px;
+  left: 0;
+  width: 1428px;
+  height: 1px;
+}
+.attempt {
+  position: relative;
+  background-color: var(--color-white);
+  width: 1445px;
+  height: 1829px;
+  overflow: hidden;
+}

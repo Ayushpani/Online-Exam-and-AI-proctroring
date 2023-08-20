@@ -1,0 +1,21 @@
+.attempt {
+  position: relative;
+}
+.property1default {
+  position: relative;
+  border-radius: var(--br-21xl);
+  background-color: var(--color-black);
+  border: 1px solid var(--color-black);
+  box-sizing: border-box;
+  width: 230px;
+  height: 73px;
+  display: flex;
+  flex-direction: row;
+  padding: var(--padding-3xs);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: var(--font-size-21xl);
+  color: var(--color-white);
+  font-family: var(--font-orelega-one);
+}
