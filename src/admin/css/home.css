@@ -41,6 +41,10 @@
     background-color: #6789ba;
 }
 .test_button{
+    margin: 10px;
+    font-size: 20px;
+    border-radius: 5px;
+    height: 50px;
     cursor: pointer;
     width: 250px;
     transition: background-color 1s;

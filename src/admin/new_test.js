@@ -59,19 +59,19 @@ function New_test(){
                     <tr>
                         <td>Enter the name of the test:</td>
                         <td>
-                            <input type = "text" onChange = {(e) => { setTestname(e.target.value) } } placeholder = "Test Name"/>
+                            <input className = "text_box" type = "text" onChange = {(e) => { setTestname(e.target.value) } } placeholder = "Test Name"/>
                         </td>
                     </tr>
                     <tr>
                         <td>Enter your name:</td>
                         <td>
-                            <input type = "text" onChange = {(e) => { setAuthor(e.target.value) } } placeholder = "Author Name"/>
+                            <input className = "text_box" type = "text" onChange = {(e) => { setAuthor(e.target.value) } } placeholder = "Author Name"/>
                         </td>
                     </tr>
                     <tr>
                         <td>What is the maximum number of questions:</td>
                         <td>
-                            <input type = "number" onChange = {(e) => { setNumber(e.target.value) } } placeholder = "No. of questions"/>
+                            <input className = "text_box" type = "number" onChange = {(e) => { setNumber(e.target.value) } } placeholder = "No. of questions"/>
                         </td>
                     </tr>
                     <tr>

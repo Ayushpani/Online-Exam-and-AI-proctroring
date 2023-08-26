@@ -8,8 +8,9 @@ function App() {
 			<div className="App">
 				<div>
 					<Link className = "link" to = "/Login">
-						<input type = "button" className = "login_btn" value = "Admin login"/>
+						<input type = "button" className = "login_btn" value = "Teacher login"/>
 					</Link>
+					&nbsp;&nbsp;
 					<Link className = "link" to = "/Uhome">
 						<input type = "button" className = "login_btn" value = "User login"/>
 					</Link>

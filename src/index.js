@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Admin from "./admin/admin";
 import Home from "./admin/Home";
 import Login from "./admin/Login";
-import Signup from "./admin/Signup";
 import NewTest from "./admin/new_test"
 import ExistingTest from "./admin/existing_test"
 import AddQuestions from "./admin/addQuestions"
@@ -24,7 +23,6 @@ root.render(
 				<Route path="/" element={<App />} />
 				<Route path="/admin" element={<Admin />} />
 				<Route path="/Login" element={<Login />} />
-				<Route path="/Signup" element={<Signup />} />
 				<Route path="/Home" element={<Home />} />
 				<Route path = "/Home/newTest" element = {<NewTest/>} />
 				<Route path = "/Home/existingTest" element = {<ExistingTest/>} />

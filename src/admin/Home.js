@@ -41,10 +41,11 @@ function Home() {
                 </div>
                 <hr />
 
-                <h1>Hello {location.state.id} and Welcome to the  admin homepage</h1>
+                <h1>Hello {location.state.id} and Welcome to the Teacher homepage</h1>
                 <div>
                     <h2>What would you like to do:</h2>
                     <input type="button" onClick = {new_test} className="test_button" id="new_test" value="Click to create a new test" />
+                    &nbsp;&nbsp;&nbsp;
                     <input type="button" onClick = {existing_test} className="test_button" id="contribute" value="Click to contribute to a test" />
                 </div>
             </center>
