@@ -32,8 +32,13 @@ table{
     display: flex;
     flex-direction: row;
 }
-
+.submit_div{
+    text-align: center;
+}
 .submit{
+    height: 40px;
+    width: 100px;
+    font-size: 20px;
     cursor: pointer;
     justify-content: center;
     border-radius: 5px;
@@ -51,7 +56,12 @@ table{
 label{
     margin: 10px;
 }
-
+.text_box_user{
+    font-size: 20px;
+    margin: 10px;
+    width: 200px;
+    height: 50px;
+}
 form{
     justify-content: center;
 }

@@ -8,7 +8,6 @@ import Login from "./admin/Login";
 import NewTest from "./admin/new_test"
 import ExistingTest from "./admin/existing_test"
 import AddQuestions from "./admin/addQuestions"
-import Header from './user/Header';
 import Uhome from './user/Home';
 import Details from './user/Details';
 import Signin from './user/Signin';

@@ -88,17 +88,19 @@ function Admin() {
                             <h1>Create a new user</h1>
                             <div className = "username">
                                 <label>Enter the username: </label>
-                                <input type = "text" placeholder = "Enter the username" onChange = {(e) => setUsername(e.target.value)}/>
+                                <input className = "text_box_user" type = "text" placeholder = "Enter the username" onChange = {(e) => setUsername(e.target.value)}/>
                             </div>
                             <div className = "email">
                                 <label>Enter the Email ID: </label>
-                                <input type = "text" placeholder = "Enter the Email ID" onChange = {(e) => setEmail(e.target.value)}/>
+                                <input className = "text_box_user" type = "text" placeholder = "Enter the Email ID" onChange = {(e) => setEmail(e.target.value)}/>
                             </div>
                             <div className = "password">
                                 <label>Create a password for the user: </label>
-                                <input type = "password" placeholder = "Create a password" onChange = {(e) => setPassword(e.target.value)}/>
+                                <input className = "text_box_user" type = "password" placeholder = "Create a password" onChange = {(e) => setPassword(e.target.value)}/>
                             </div>
-                            <input className = "submit" type = "button" onClick = {add} value = "Add user"/>
+                            <div className = "submit_div">
+                                <input className = "submit" type = "button" onClick = {add} value = "Add user"/>
+                            </div>
                         </form>
                 </Popup>
             </div>
