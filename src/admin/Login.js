@@ -14,7 +14,7 @@ function Login() {
         e.preventDefault();
 
         try{
-            await axios.post("http://localhost:8000/",{
+            await axios.post("http://localhost:8000/Login",{
                 email,password
             })
             .then(res => {

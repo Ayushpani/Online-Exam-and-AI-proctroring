@@ -1,18 +1,17 @@
-import React, { useState } from 'react'                                                           
+import React, { useState } from 'react'                                                                  //1:18:33
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Bgimg from './Bgimg'
-import { NavLink } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
+const Signin = () => {
 
+    const history = useNavigate();
 
-
-const Home = () => {
-    
     const[inpval,setInpval] = useState({
-        name:"",
+        
         email:"",
-        date:"",
+        
         password:""
     })
 
@@ -38,19 +37,16 @@ const Home = () => {
     const addData = (e)=>{
         e.preventDefault();
 
-        const {name,email,date,password} = inpval;
+        const getuserArr = localStorage.getItem("userguy");
+        console.log(getuserArr);
 
-        if(name === ""){
-            alert("name field is required")
+        const {email,password} = inpval;
 
-        }else if(email === ""){
+         if(email === ""){
             alert("email field is required")
 
         }else if (!email.includes("@")){
             alert("please enter valid email address")
-
-        }else if(date === ""){
-            alert("date field is required")
 
         }else if(password === ""){
             alert("password field is required")
@@ -59,34 +55,36 @@ const Home = () => {
             alert("password length must be greater than 5")
 
         }else{
-            console.log("data added succesfully");  
-
-            localStorage.setItem("userguy",JSON.stringify([...data,inpval]));
+            if(getuserArr && getuserArr.length){
+                const userdata = JSON.parse(getuserArr);
+                const usersignin = userdata.filter((el,k)=>{
+                    return el.email === email && el.password === password
+                    
+                });  
+                if(usersignin.length === 0){
+                    alert("invalid details")
+                }else{
+                    console.log("user login successful");
+                    history("/Details")
+                }
+            
+           }
         }
     }
-
 
   return (
     <>
         <div className="container mt-5">
             <section className='d-flex justify-content-between'>
               <div className="left_data mt-5 p-3" style={{width:"100%"}}>
-                <h3 className='text-center col-lg-6'> SIGN UP</h3>
+                <h3 className='text-center col-lg-6'> SIGN IN</h3>
                
                 <Form>
-                <Form.Group className="mb-3 col-lg-6" controlId="formBasicEmail">
-                    
-                    <Form.Control type="text" name='name' onChange={getdata} placeholder="Enter your name" />
-                </Form.Group>
+                
 
                 <Form.Group className="mb-3 col-lg-6" controlId="formBasicEmail">
                     
                     <Form.Control type="email" name='email' onChange={getdata} placeholder="Enter email" />
-                </Form.Group>
-
-                <Form.Group className="mb-3 col-lg-6" controlId="formBasicEmail">
-                    
-                    <Form.Control name='date' onChange={getdata} type="date"  />
                 </Form.Group>
 
                 <Form.Group className="mb-3 col-lg-6" controlId="formBasicPassword">
@@ -96,14 +94,14 @@ const Home = () => {
                    <Button variant="primary" className='col-lg-6' onClick={addData} style={{background:"rgb(67,185,127)"}} type="submit">
                     Submit
                   </Button> 
-                </Form>
-                <p className='mt-3'>Already have an account ? <span><NavLink to="/Signin"> SIGN IN </NavLink> </span> </p>
+  </Form>  
+                <p className='mt-3'>Want to create an account ? <span> SIGN UP </span> </p>
               </div>
-                <Bgimg />       
+                <Bgimg />      
             </section>
         </div>
     </>
   )
 }
 
-export default Home
+export default Signin

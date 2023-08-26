@@ -15,7 +15,7 @@ function Login() {
         e.preventDefault();
 
         try{
-            await axios.post("http://localhost:8000/signup",{
+            await axios.post("http://localhost:8000/Signup",{
                 name,email,password
             })
             .then(res => {

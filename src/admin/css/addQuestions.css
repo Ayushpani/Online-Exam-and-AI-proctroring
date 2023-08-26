@@ -1,0 +1,58 @@
+.title{
+    text-align: center;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    border-bottom-color: black;
+}
+.existing_questions{
+    margin: 10px;
+}
+#question_image{
+    height: 150px;
+    width: 70%;
+}
+.popup{
+    border-width: 5px;
+    border-color: black;
+    border-style: solid;
+}
+.add{
+    cursor: pointer;
+    font-weight: bolder;
+    font-size: 20px;
+    margin: 10px;
+}
+.label .textbox{
+    display: flex;
+    flex-direction: row;
+}
+.question_no, .image, .option{
+    display: flex;
+    flex-direction: row;
+}
+.label{
+    margin: 25px;
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+    width: 150px;
+}
+.radio{
+    width:fit-content;
+    height: fit-content;
+}
+.submit_div{
+    align-items: center;
+}
+.sub_btn{
+    border-radius: 5px;
+    width: 100px;
+    height: 30px;
+    justify-content: center;
+    background-color: lightblue;
+    transition: background-color 1s;
+}
+.sub_btn:hover{
+    cursor: pointer;
+    background-color: lightgreen;
+}

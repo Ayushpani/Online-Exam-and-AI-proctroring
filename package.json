@@ -3,20 +3,41 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@aws-amplify/ui-react": "^5.2.0",
+    "@aws-sdk/client-s3": "^3.398.0",
+    "@aws-sdk/lib-storage": "^3.398.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "aws-amplify": "^5.3.9",
+    "aws-amplify-react": "^4.1.22",
+    "aws-sdk": "^2.1442.0",
     "axios": "^1.4.0",
+    "body-parser": "^1.20.2",
+    "bootstrap": "^5.3.1",
     "components": "^0.1.0",
     "cors": "^2.8.5",
+    "crypto-browserify": "^3.12.0",
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
     "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "gridfs-stream": "^1.1.1",
     "mongoose": "^7.4.2",
+    "multer": "^1.4.5-lts.1",
     "nodemon": "^3.0.1",
+    "os-browserify": "^0.3.0",
+    "path": "^0.12.7",
     "react": "^18.2.0",
+    "react-aws-s3": "^1.5.0",
+    "react-bootstrap": "^2.8.0",
     "react-dom": "^18.2.0",
+    "react-dotenv": "^0.1.3",
+    "react-multi-carousel": "^2.8.4",
     "react-router-dom": "^6.15.0",
     "react-scripts": "^5.0.1",
     "react-simple-image-slider": "^2.4.1",
+    "reactjs-popup": "^2.0.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -44,6 +65,12 @@
     ]
   },
   "devDependencies": {
-    "eslint-plugin-react": "^7.33.1"
+    "@babel/core": "^7.22.10",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/preset-env": "^7.22.10",
+    "@babel/preset-react": "^7.22.5",
+    "babel-loader": "^9.1.3",
+    "eslint-plugin-react": "^7.33.1",
+    "react-s3": "^1.3.1"
   }
 }

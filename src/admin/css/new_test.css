@@ -11,7 +11,7 @@
     padding-left: 30px;
     text-align: center;
 }
-.homepage #nav{
+.new_test #nav{
     display: flex;
     flex-direction: row;
 }
@@ -40,14 +40,6 @@
     cursor: pointer;
     background-color: #6789ba;
 }
-.test_button{
-    cursor: pointer;
-    width: 250px;
-    transition: background-color 1s;
-}
-.test_button:hover{
-    background-color: rgb(160, 160, 214);
-}
-hr{
-    border: 1px solid black;
+#sub_btn{
+    border-radius: 0px;
 }

@@ -20,8 +20,44 @@ const newSchema = new mongoose.Schema({
         type: String,
         required: true
     }
-})
+});
 
-const collection = mongoose.model("collection", newSchema)
+const testSchema = new mongoose.Schema({
+    test_name:{
+        type: String,
+        required: true
+    },
+    test_author:{
+        type: String,
+        required: true
+    },
+    no_of_questions:{
+        type: Number,
+        required: true
+    }
+});
 
-module.exports = collection
+const question = new mongoose.Schema({
+    test_name:{
+        type: String,
+        required: true
+    },
+    qno:{
+        type: Number,
+        required: true
+    },
+    question:{
+        type: String,
+        required: true
+    },
+    option:{
+        type: String,
+        required: true
+    }
+});
+
+const collection = mongoose.model("collection", newSchema);
+const test_data = mongoose.model("test_data", testSchema);
+const questions = mongoose.model("questions", question)
+
+module.exports = { collection, test_data, questions }
