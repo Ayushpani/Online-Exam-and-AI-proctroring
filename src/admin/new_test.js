@@ -12,8 +12,12 @@ function New_test(){
 
     const history = useNavigate();
     const location = useLocation();
+    if(!location.state){
+        alert("Please login");
+        history("/Login");
+    }
     const handleLogout = () => {
-        localStorage.clear('token');
+        history(location.pathname, { replace: true });
         history("/Login")
     }
     const home = () => {

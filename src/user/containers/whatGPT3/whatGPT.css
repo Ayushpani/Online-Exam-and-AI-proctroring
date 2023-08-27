@@ -1,0 +1,68 @@
+.quiz__whatproctor {
+    border: 1px solid whitesmoke;
+    display: flex;
+    flex-direction: column;
+
+    padding: 2rem;
+    background:var(--color-footer);
+}
+
+.quiz__whatproctor-feature{
+    display: flex;
+}
+
+.quiz__whatproctor-feature .quiz__features-container__feature{
+    margin: 0;
+
+
+}
+
+.quiz__whatproctor-feature .quiz__features-container__feature-text{
+    max-width: 700px;
+}
+
+.quiz__whatproctor-heading{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    margin: 4rem 0 2rem;
+}
+
+.quiz__whatproctor-heading h1{
+    align-items: center;
+    font-size: 34px;
+    line-height: 45px;
+    font-weight: 510px;
+    max-width: 510px;
+    font-family: var(--font-family)
+}
+
+.gradient__text{
+        background:var(--gradient-text);
+        background-clip: text;
+        -webkit-background-clop:text;
+        -webkit-text-fill-color: transparent;
+      }
+
+.quiz__whatproctor-container{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+
+    margin-top: 2rem;
+}
+
+.quiz__whatproctor-container .quiz__features-container__feature {
+    flex: 1;
+    margin: 1rem;
+    min-width: 210px;
+    display: unset;
+    flex-direction: column;
+}
+
+/* Customizing feature component as per needs */
+.quiz__whatproctor-container .quiz__features-container_feature-text {
+    margin-top: 0.5rem;
+}

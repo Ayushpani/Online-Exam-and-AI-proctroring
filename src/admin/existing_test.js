@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import {useNavigate, useLocation} from 'react-router-dom';
 
 function Existing_test(){
+    const location = useLocation();
     const [data, setData] = useState([]);
     useEffect(() => {
         axios.post('http://localhost:8000/Home/existingTest')
@@ -16,8 +17,12 @@ function Existing_test(){
         });
     }, []);
     const history = useNavigate();
+    if(!location.state){
+        alert("Please login");
+        history("/Login");
+    }
     const handleLogout = () => {
-        localStorage.clear('token');
+        history(location.pathname, { replace: true });
         history("/Login")
     }
     const home = () => {
@@ -37,7 +42,6 @@ function Existing_test(){
         box.scrollLeft = box.scrollLeft + width;
         console.log(width)
     }
-    const location = useLocation();
     const email = location.state.id;
     return(
         <div className = "existing_test">

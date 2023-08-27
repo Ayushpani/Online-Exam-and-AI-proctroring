@@ -1,0 +1,42 @@
+.quiz__header{
+    display: flex;
+
+}
+
+.quiz__header-content{
+    flex: 1;
+    display: flex ;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+
+    margin-right: 5rem;
+}
+
+.quiz__header-content h1{
+    font-family: var(--font-family);
+    font-weight: 800;
+
+    font-style: normal;
+    font-weight: 800;
+    font-size: 62px;
+    line-height: 75px;
+
+    letter-spacing: -0.04em;
+}
+.gradient_text{
+    color:aquamarine ;
+    
+}
+
+.quiz__header-image{
+    flex:1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.quiz__header-image img{
+    height: 100%;
+    width: 100%;
+}

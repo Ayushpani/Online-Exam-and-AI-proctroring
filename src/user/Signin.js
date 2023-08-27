@@ -65,7 +65,7 @@ const Signin = () => {
                     alert("invalid details")
                 }else{
                     console.log("user login successful");
-                    history("/Details")
+                    history("/Uhome")
                 }
             
            }

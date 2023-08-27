@@ -54,7 +54,7 @@ const Attempt = () => {
             <img
               className={styles.whatsappImage20230820At1}
               alt=""
-              src="/Logo@2x.png"
+              src="./images proj/Logo@2x.png"
             />
             <div className={styles.home}>Home</div>
             <div className={styles.home}>Your Profile</div>
@@ -70,7 +70,7 @@ const Attempt = () => {
             <img
               className={styles.istockphoto1148585703612x612Icon}
               alt=""
-              src="/computertest@2x.png"
+              src="./images proj/computertest@2x.png"
             />
             <div className={styles.test11}>Test 1</div>
             <Property1Default
@@ -123,7 +123,7 @@ const Attempt = () => {
             <img
               className={styles.istockphoto1148585703612x612Icon3}
               alt=""
-              src="/computertest3@2x.png"
+              src="./computertest3@2x.png"
             />
             <div className={styles.test4}>Test 4</div>
             <Property1Default
@@ -225,7 +225,7 @@ const Attempt = () => {
             onClick={onInstagramClick}
           >
             <div className={styles.instagramChild} />
-            <img className={styles.instagramIcon} alt="" src="/instagram.svg" />
+            <img className={styles.instagramIcon} alt="" src="./images proj/instagram.svg" />
           </a>
         </a>
       </div>

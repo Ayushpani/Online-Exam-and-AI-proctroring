@@ -8,9 +8,14 @@ import "./css/home.css"
 import { useNavigate, useLocation, Link } from "react-router-dom"
 
 function Home() {
+    const location = useLocation()
     const history = useNavigate();
+    if(!location.state){
+        alert("Please login");
+        history("/Login");
+    }
     const handleLogout = () => {
-        localStorage.clear('token');
+        history(location.pathname, { replace: true });
         history("/Login")
     }
     const home = () => {
@@ -23,7 +28,6 @@ function Home() {
         history("/Home/existingTest", { state: { id: location.state.id }});
     }
     const sliderImages = [photo1, photo2, photo3]
-    const location = useLocation()
     return (
         <div className="homepage">
             <div id = "nav">

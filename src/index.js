@@ -8,11 +8,14 @@ import Login from "./admin/Login";
 import NewTest from "./admin/new_test"
 import ExistingTest from "./admin/existing_test"
 import AddQuestions from "./admin/addQuestions"
-import Uhome from './user/Home';
+import Signup from './user/Home';
 import Details from './user/Details';
 import Signin from './user/Signin';
+import UserApp from './user/App';
+import Test from './user/TermsAndCond/Attempt';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -26,9 +29,11 @@ root.render(
 				<Route path = "/Home/newTest" element = {<NewTest/>} />
 				<Route path = "/Home/existingTest" element = {<ExistingTest/>} />
 				<Route path = "/Home/addQuestions" element = {<AddQuestions/>} />
-				<Route path='/Uhome' element={<Uhome />} />
+				<Route path='/Uhome' element={<UserApp />} />
 				<Route path='/Signin' element={<Signin />} />
+				<Route path='/Signup' element={<Signup />} />
 				<Route path='/Details' element={<Details />} />
+				<Route path='/test' element={<Test />} />
 			</Routes>
 		</Router>
 	</React.StrictMode>

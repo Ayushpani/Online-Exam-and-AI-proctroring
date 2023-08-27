@@ -11,7 +11,7 @@ function App() {
 						<input type = "button" className = "login_btn" value = "Teacher login"/>
 					</Link>
 					&nbsp;&nbsp;
-					<Link className = "link" to = "/Uhome">
+					<Link className = "link" to = "/Signup">
 						<input type = "button" className = "login_btn" value = "User login"/>
 					</Link>
 				</div>
