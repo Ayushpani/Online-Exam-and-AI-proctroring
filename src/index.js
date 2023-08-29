@@ -12,10 +12,10 @@ import Signup from './user/Home';
 import Details from './user/Details';
 import Signin from './user/Signin';
 import UserApp from './user/App';
-import Test from './user/TermsAndCond/Attempt';
+import Test from './user/userTest/Attempt';
+import Terms from './user/userTest/TermsAndConditions'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -34,6 +34,7 @@ root.render(
 				<Route path='/Signup' element={<Signup />} />
 				<Route path='/Details' element={<Details />} />
 				<Route path='/test' element={<Test />} />
+				<Route path='/test/terms' element={<Terms />} />
 			</Routes>
 		</Router>
 	</React.StrictMode>

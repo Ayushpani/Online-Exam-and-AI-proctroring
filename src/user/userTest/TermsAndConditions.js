@@ -1,15 +1,16 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./TermsAndConditions.module.css";
+import frame from './imagesProj/frame.svg'
 const TermsAndConditions = () => {
   const navigate = useNavigate();
 
   const onFrame2Click = useCallback(() => {
-    navigate("/attempt");
+    navigate("/test");
   }, [navigate]);
 
   const onBackClick = useCallback(() => {
-    navigate("/attempt");
+    navigate("/test");
   }, [navigate]);
 
   return (
@@ -62,7 +63,7 @@ const TermsAndConditions = () => {
         </section>
         <section className={styles.frame2} onClick={onFrame2Click}>
           <button className={styles.back} onClick={onBackClick}>
-            <img className={styles.frameIcon} alt="" src="/frame.svg" />
+            <img className={styles.frameIcon} alt="" src={frame} />
             <div className={styles.back1}>Back</div>
           </button>
         </section>

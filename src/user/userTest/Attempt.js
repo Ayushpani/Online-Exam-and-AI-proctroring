@@ -1,12 +1,35 @@
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios'
 import Property1Default from "./Property1Default";
 import styles from "./Attempt.module.css";
+import test1 from './imagesProj/computertest@2x.png'
+import test2 from './imagesProj/computertest1@2x.png'
+import test3 from './imagesProj/computertest2@2x.png'
+import test4 from './imagesProj/computertest3@2x.png'
+import test5 from './imagesProj/computertest4@2x.png'
+import onlinex from './imagesProj/examonline@2x.png'
+import frame1 from './imagesProj/frame1.svg'
+import insta from './imagesProj/instagram.svg'
+import vector from './imagesProj/vector.svg'
+import vector1 from './imagesProj/vector1.svg'
+import logo from './imagesProj/Logo@2x.png'
 const Attempt = () => {
   const navigate = useNavigate();
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    axios.post("http://localhost:8000/Home/existingTest")
+    .then(res => {
+      setData(res.data);
+    })
+    .catch(e => {
+      alert("There are no tests right now come back later");
+    })
+  })
 
   const onFrameButtonClick = useCallback(() => {
-    navigate("/");
+    navigate("/test/terms");
   }, [navigate]);
 
   const onFrameButton1Click = useCallback(() => {
@@ -30,7 +53,7 @@ const Attempt = () => {
   }, [navigate]);
 
   const onTestContainerClick = useCallback(() => {
-    navigate("/attempt");
+    navigate("/test");
   }, [navigate]);
 
   const onFacebookClick = useCallback(() => {
@@ -54,7 +77,7 @@ const Attempt = () => {
             <img
               className={styles.whatsappImage20230820At1}
               alt=""
-              src="./images proj/Logo@2x.png"
+              src={logo}
             />
             <div className={styles.home}>Home</div>
             <div className={styles.home}>Your Profile</div>
@@ -66,13 +89,17 @@ const Attempt = () => {
       </nav>
       <section className={styles.frame2}>
         <div className={styles.frame3}>
+          {data.map(i => {
+            return(
           <div className={styles.istockphoto1148585703612x612Parent}>
             <img
               className={styles.istockphoto1148585703612x612Icon}
               alt=""
-              src="./images proj/computertest@2x.png"
+              src={test2}
             />
-            <div className={styles.test11}>Test 1</div>
+            <div className={styles.test11}>{i.test_name}</div>
+            <div className={styles.test11}>{i.test_author}</div>
+            <div className={styles.test11}>{i.no_of_questions}</div>
             <Property1Default
               property1DefaultPosition="absolute"
               property1DefaultCursor="pointer"
@@ -83,11 +110,14 @@ const Attempt = () => {
               onFrameButton5Click={onFrameButtonClick}
             />
           </div>
+            )
+          })}
+          {/*
           <div className={styles.istockphoto1148585703612x612Group}>
             <img
               className={styles.istockphoto1148585703612x612Icon1}
               alt=""
-              src="/computertest1@2x.png"
+              src={test2}
             />
             <div className={styles.test2}>Test 2</div>
             <Property1Default
@@ -105,7 +135,7 @@ const Attempt = () => {
             <img
               className={styles.istockphoto1148585703612x612Icon2}
               alt=""
-              src="/computertest2@2x.png"
+              src={test3}
             />
             <div className={styles.test3}>Test 3</div>
             <Property1Default
@@ -123,7 +153,7 @@ const Attempt = () => {
             <img
               className={styles.istockphoto1148585703612x612Icon3}
               alt=""
-              src="./computertest3@2x.png"
+              src={test4}
             />
             <div className={styles.test4}>Test 4</div>
             <Property1Default
@@ -141,7 +171,7 @@ const Attempt = () => {
             <img
               className={styles.istockphoto1148585703612x612Icon1}
               alt=""
-              src="/computertest1@2x.png"
+              src={test2}
             />
             <div className={styles.test5}>Test 5</div>
             <Property1Default
@@ -159,7 +189,7 @@ const Attempt = () => {
             <img
               className={styles.istockphoto1148585703612x612Icon5}
               alt=""
-              src="/computertest4@2x.png"
+              src={test5}
             />
             <div className={styles.test3}>Test 6</div>
             <Property1Default
@@ -173,6 +203,7 @@ const Attempt = () => {
               onFrameButton5Click={onFrameButton5Click}
             />
           </div>
+          */}
         </div>
       </section>
       <section className={styles.frame4}>
@@ -180,7 +211,7 @@ const Attempt = () => {
           <img
             className={styles.examOnline1Icon}
             alt=""
-            src="/examonline@2x.png"
+            src={onlinex}
           />
           <p className={styles.frame6}>
             <div className={styles.onlineTestsAreContainer}>
@@ -209,7 +240,7 @@ const Attempt = () => {
             onClick={onFacebookClick}
           >
             <div className={styles.facebookChild} />
-            <img className={styles.vectorIcon} alt="" src="/vector.svg" />
+            <img className={styles.vectorIcon} alt="" src={vector} />
           </a>
           <a
             className={styles.facebook}
@@ -217,7 +248,7 @@ const Attempt = () => {
             onClick={onTwitterClick}
           >
             <div className={styles.twitterChild} />
-            <img className={styles.vectorIcon1} alt="" src="/vector1.svg" />
+            <img className={styles.vectorIcon1} alt="" src={vector1} />
           </a>
           <a
             className={styles.facebook}
@@ -225,11 +256,11 @@ const Attempt = () => {
             onClick={onInstagramClick}
           >
             <div className={styles.instagramChild} />
-            <img className={styles.instagramIcon} alt="" src="./images proj/instagram.svg" />
+            <img className={styles.instagramIcon} alt="" src={insta} />
           </a>
         </a>
       </div>
-      <img className={styles.frameIcon} alt="" src="/frame1.svg" />
+      <img className={styles.frameIcon} alt="" src={frame1} />
     </main>
   );
 };

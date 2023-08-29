@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Bgimg from './Bgimg'
 import { useNavigate } from 'react-router-dom'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Signin = () => {
 
