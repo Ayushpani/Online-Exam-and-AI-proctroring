@@ -56,8 +56,28 @@ const question = new mongoose.Schema({
     }
 });
 
+const user_detail = new mongoose.Schema({
+    name:{
+        type: String,
+        required: true
+    },
+    email:{
+        type: String,
+        required: true
+    },
+    dob:{
+        type: String,
+        required: true
+    },
+    password:{
+        type: String,
+        required: true
+    }
+});
+
 const collection = mongoose.model("collection", newSchema);
 const test_data = mongoose.model("test_data", testSchema);
-const questions = mongoose.model("questions", question)
+const questions = mongoose.model("questions", question);
+const user_details = mongoose.model("user_details", user_detail);
 
-module.exports = { collection, test_data, questions }
+module.exports = { collection, test_data, questions, user_details }

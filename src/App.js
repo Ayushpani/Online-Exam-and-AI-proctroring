@@ -1,6 +1,5 @@
 import './App.css'
-import { Link, BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useState } from 'react';
+import { Link } from "react-router-dom";
 
 function App() {
 	return (

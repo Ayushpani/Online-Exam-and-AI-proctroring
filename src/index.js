@@ -8,8 +8,7 @@ import Login from "./admin/Login";
 import NewTest from "./admin/new_test"
 import ExistingTest from "./admin/existing_test"
 import AddQuestions from "./admin/addQuestions"
-import Signup from './user/Home';
-import Details from './user/Details';
+import Signup from './user/Signup';
 import Signin from './user/Signin';
 import UserApp from './user/App';
 import Test from './user/userTest/Attempt';
@@ -32,7 +31,6 @@ root.render(
 				<Route path='/Uhome' element={<UserApp />} />
 				<Route path='/Signin' element={<Signin />} />
 				<Route path='/Signup' element={<Signup />} />
-				<Route path='/Details' element={<Details />} />
 				<Route path='/test' element={<Test />} />
 				<Route path='/test/terms' element={<Terms />} />
 			</Routes>

@@ -1,5 +1,5 @@
 const express = require("express");
-const { collection, test_data, questions } = require("./mongo")
+const { collection, test_data, questions, user_details } = require("./mongo")
 const cors =require("cors")
 const app = express()
 app.use(express.json())
@@ -165,6 +165,54 @@ app.post("/Home/addQuestions/delete", async(req, res) => {
         console.log(e);
         
     }
+})
+
+app.post("/user/Signup", async(req, res) => {
+    const {name, email, dob, password} = req.body;
+    const data = {
+        name: name,
+        email: email,
+        dob: dob,
+        password: password
+    }
+    try{
+        const check = await user_details.findOne({email: email});
+        if(check){
+            res.json("exists")
+        }
+        else{
+            res.json("not exists")
+            user_details.insertMany([data])
+        }
+    }
+    catch(e){
+        console.log(e);
+    }
+})
+
+app.post("/user/Signin", async(req, res) => {
+    const{name, email, password} = req.body
+
+    try{
+        const check = await user_details.findOne({email: email});
+        
+        if(check){
+            const password_check = check ? check.password : 'User not found';
+            if(password_check == password){
+                res.json("exists");
+            }
+            else{
+                res.json("incorrect password");
+            }
+        }
+        else{
+            res.json("not exist")
+        }
+    }
+    catch(e){
+        res.json("not exist")
+    }
+
 })
 
 app.listen(8000, () => {

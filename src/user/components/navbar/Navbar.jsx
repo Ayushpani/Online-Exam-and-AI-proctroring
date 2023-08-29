@@ -2,6 +2,7 @@ import React, { useState} from 'react';
 import './navbar.css';
 import { RiMenu3Line, RiCloseLine } from 'react-icons/ri';
 import logo from '../../assets/logo2.png'
+import { useNavigate } from 'react-router-dom';
 // BEM -> block element modifier
 
 const Menu = () => (
@@ -13,6 +14,10 @@ const Menu = () => (
 )
 const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false)
+  const history = useNavigate();
+  function adminLogin(){
+    history("/Login")
+  }
   return (
     <div className = "quiz__navbar">
       <div className="quiz__navbar-links">
@@ -25,7 +30,7 @@ const Navbar = () => {
       </div>
       <div className="quiz__navbar-sign">
         <p>Sign in</p>
-        <button type="button" ><span>Sign up</span></button>
+        <button type="button" onClick = {adminLogin}><span>Sign up</span></button>
       </div>
       <div className="quiz__navbar-menu">
       {toggleMenu
