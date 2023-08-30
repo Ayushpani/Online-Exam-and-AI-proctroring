@@ -71,15 +71,17 @@
   height: 301px;
   object-fit: cover;
 }
+.test_name{
+  font-weight: bolder;
+  font-size: 40px;
+}
 .test11 {
-  position: absolute;
-  top: 25.5px;
-  left: 75.42px;
-  display: inline-block;
-  width: 207px;
-  height: 55px;
+  margin: 10px;
 }
 .istockphoto1148585703612x612Parent {
+  border-width: 5px;
+  border-style: solid;
+  border-color: rgb(25, 172, 222);
   position: relative;
   width: 357.84px;
   height: 283px;

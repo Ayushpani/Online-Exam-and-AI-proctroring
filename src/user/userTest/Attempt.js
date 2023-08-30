@@ -92,14 +92,14 @@ const Attempt = () => {
           {data.map(i => {
             return(
           <div className={styles.istockphoto1148585703612x612Parent}>
-            <img
+            {/*<img
               className={styles.istockphoto1148585703612x612Icon}
               alt=""
               src={test2}
-            />
-            <div className={styles.test11}>{i.test_name}</div>
-            <div className={styles.test11}>{i.test_author}</div>
-            <div className={styles.test11}>{i.no_of_questions}</div>
+            />*/}
+            <div className={styles.test_name}>{i.test_name}</div>
+            <div className={styles.test11}>Test author: {i.test_author}</div>
+            <div className={styles.test11}>No. of questions: {i.no_of_questions}</div>
             <Property1Default
               property1DefaultPosition="absolute"
               property1DefaultCursor="pointer"

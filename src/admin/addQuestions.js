@@ -81,7 +81,28 @@ function AddQuestions() {
             console.log(e);
         }
     }
-    async function del(qn){
+    async function del(qn, question){
+        AWS.config.update({
+            accessKeyId: config.accessKeyId,
+            secretAccessKey: config.secretAccessKey,
+        });
+        const s3 = new AWS.S3({
+            params: {Bucket: config.bucketName},
+            region: config.region,
+        });
+        const key = question.split('/').pop();
+        console.log(key)
+        const params = {
+            Bucket: config.bucketName,
+            Key: key,
+        }
+        try{
+            await s3.deleteObject(params).promise();
+            console.log("Object deleted successfully");
+        }
+        catch(e){
+            console.log(e);
+        }
         try{
             await axios.post("http://localhost:8000/Home/addQuestions/delete", {
                 test_name, qn
@@ -118,7 +139,7 @@ function AddQuestions() {
                                 <td><div id="qno">{i.qno}</div></td>
                                 <td><div id="question"><img id = "question_image" src = {i.question}/></div></td>
                                 <td><div id="correct_option">{i.option}</div></td>
-                                <td><button onClick = {() => del(i.qno)}>yes</button></td>
+                                <td><button onClick = {() => del(i.qno, i.question)}>yes</button></td>
                             </tr>
                         )
                     })}
