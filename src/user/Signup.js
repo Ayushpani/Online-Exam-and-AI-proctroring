@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import axios from 'axios'
+import './css/Signup.css'
 
 function Signup() {
 
@@ -39,21 +40,21 @@ function Signup() {
         <div className="userSignup">
             <div className="user_signup_form">
                 <form className="uSignup_form">
-                    <h2>Create a new account on Quizwizard</h2>
+                    <h1 className = "heading_signup">Create a new account on Quizwizard</h1>
                     <div className="name_field">
-                        <label>Enter your name: </label>
+                        <label>Enter your name: </label><br/>
                         <input type="text" onChange = {(e) => setName(e.target.value)} placeholder="Enter your name" />
                     </div>
                     <div className="email_id_field">
-                        <label>Enter your email ID: </label>
+                        <label>Enter your email ID: </label><br/>
                         <input type="text" onChange = {(e) => setEmail(e.target.value)} placeholder="Enter your email ID" />
                     </div>
                     <div className="DOB">
-                        <label>Please choose your date of birth:</label>
+                        <label>Please choose your date of birth:</label><br/>
                         <input type="date" onChange = {(e) => setDob(e.target.value)}/>
                     </div>
                     <div className="passwd">
-                        <label>Create a password for your account: </label>
+                        <label>Create a password for your account: </label><br/>
                         <input type="password" onChange = {(e) => setPasswd(e.target.value)} placeholder="Enter your password" />
                     </div>
                     <input className="create_btn" type="button" value="Create account" onClick={createUser} />

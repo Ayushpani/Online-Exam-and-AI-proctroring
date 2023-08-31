@@ -191,7 +191,7 @@ app.post("/user/Signup", async(req, res) => {
 })
 
 app.post("/user/Signin", async(req, res) => {
-    const{name, email, password} = req.body
+    const{email, password} = req.body
 
     try{
         const check = await user_details.findOne({email: email});

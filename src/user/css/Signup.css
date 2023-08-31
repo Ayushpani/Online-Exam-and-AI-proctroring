@@ -1,0 +1,87 @@
+.uSignup_form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    background-image: url("../../images/app_bg.jpeg");
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+.name_field{
+    text-align: center;
+    margin: 10px;
+    font-size: 20px;
+    font-style: solid;
+    font-weight: bolder;
+    -webkit-text-fill-color: navy;
+}
+.name_field input{
+    margin: 10px;
+    text-align: center;
+    height: 40px;
+    width: 200px;
+    border-radius: 10px;
+    font-size: 15px;
+}
+.email_id_field{
+    text-align: center;
+    margin: 10px;
+    font-size: 20px;
+    font-style: solid;
+    font-weight: bolder;
+    -webkit-text-fill-color: navy;
+}
+.email_id_field input{
+    margin: 10px;
+    text-align: center;
+    height: 40px;
+    width: 200px;
+    border-radius: 10px;
+    font-size: 15px;
+}
+.DOB{
+    text-align: center;
+    margin: 10px;
+    font-size: 20px;
+    font-style: solid;
+    font-weight: bolder;
+    -webkit-text-fill-color: navy;
+}
+.DOB input{
+    margin: 10px;
+    text-align: center;
+    height: 40px;
+    width: 200px;
+    border-radius: 10px;
+    font-size: 15px;
+}
+.passwd{
+    text-align: center;
+    margin: 10px;
+    font-size: 20px;
+    font-style: solid;
+    font-weight: bolder;
+    -webkit-text-fill-color: navy;
+}
+.passwd input{
+    margin: 10px;
+    text-align: center;
+    height: 40px;
+    width: 200px;
+    border-radius: 10px;
+    font-size: 15px;
+}
+.heading_signup{
+    margin: 10px;
+    color: black;
+}
+.create_btn{
+    height: 40px;
+    width: 160px;
+    border-radius: 10px;
+    font-size: 20px;
+    background-color: lightgreen;
+}

@@ -21,6 +21,17 @@
   color: var(--color-black);
   font-family: var(--font-orelega-one);
 }
+.blankLine,
+.dos {
+  display: block;
+}
+.blankLine {
+  font-family: var(--font-orelega-one);
+}
+.dontChangeTheDateAndTime {
+  display: block;
+  color: var(--color-red);
+}
 .dosGeneralGuidelinesContainer {
   margin: 0 !important;
   position: absolute;
