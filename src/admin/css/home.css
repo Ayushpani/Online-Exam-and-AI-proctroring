@@ -43,7 +43,7 @@
 .test_button{
     margin: 10px;
     font-size: 20px;
-    border-radius: 5px;
+    border-radius: 10px;
     height: 50px;
     cursor: pointer;
     width: 250px;
@@ -54,4 +54,26 @@
 }
 hr{
     border: 1px solid black;
+}
+.slider{
+    width: 50%;
+}
+#image_slider{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 10px;
+}
+.welcome{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    text-align:center;
+    align-items:center;
+    justify-content: center;
+}
+#after_nav{
+    display: flex;
+    flex-direction: row;
 }

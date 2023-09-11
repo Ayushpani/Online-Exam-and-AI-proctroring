@@ -1,6 +1,7 @@
 const express = require("express");
 const { collection, test_data, questions, user_details } = require("./mongo")
-const cors =require("cors")
+const cors =require("cors");
+const { rmSync } = require("fs");
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -83,11 +84,12 @@ app.post("/Login", async(req, res) => {
 })
 
 app.post("/Home/newTest", async(req, res) => {
-    const{test_name, test_author, no_of_questions} = req.body
+    const{test_name, test_author, author_email, no_of_questions} = req.body
 
     const data = {
         test_name: test_name,
         test_author: test_author,
+        author_email: author_email,
         no_of_questions: no_of_questions
     }
 
@@ -98,7 +100,7 @@ app.post("/Home/newTest", async(req, res) => {
             res.json("exist")
         }
         else{
-            const check1 = await collection.findOne({name: test_author});
+            const check1 = await collection.findOne({email: author_email});
             if(check1){
                 res.json("not exist")
                 await test_data.insertMany([data])
@@ -115,9 +117,15 @@ app.post("/Home/newTest", async(req, res) => {
 })
 
 app.post("/Home/existingTest", async(req, res) => {
-    const data = await test_data.find({});
+    const {email} = req.body;
     try{
-        res.json(data)
+        const tests = await test_data.find({$or: [{ author_email: email }, { other_contributors: email }]});
+        if (tests){
+            res.json(tests)
+        }
+        else{
+            res.json("no test");
+        }
     }
     catch(e){
         res.json("not exist")
@@ -164,6 +172,81 @@ app.post("/Home/addQuestions/delete", async(req, res) => {
     catch(e){
         console.log(e);
         
+    }
+})
+
+app.post("/Home/addQuestions/deleteTest", async(req, res) => {
+    const {test_name} = req.body;
+    try{
+        const ans = await questions.deleteMany({test_name: test_name});
+        const ans1 = await test_data.deleteOne({test_name: test_name});
+        if(ans, ans1){
+            res.json("Test deleted");
+        }
+        else{
+            res.json("Not deleted");
+        }
+    }
+    catch(e){
+        console.log(e);
+    }
+})
+
+app.post("/Home/addQuestions/author", async(req, res) =>{
+    const {test_name} = req.body;
+    try{
+        const ans = await test_data.findOne({test_name: test_name})
+        if(ans){
+            const author_email = ans ? ans.author_email : 'User not found';
+            res.json(author_email);
+        }
+        else{
+            res.json("No such test");
+        }
+    }
+    catch(e){
+        console.log(e);
+    }
+})
+
+app.post("/Home/addQuestions/addContributor", async(req, res) => {
+    const {test_name, newContributor} = req.body;
+    try{
+        const check = await collection.findOne({ email: newContributor });
+        if (check) {
+            const document = await test_data.findOne({ test_name: test_name });
+            if (document) {
+                document.other_contributors.push(newContributor)
+                await document.save();
+                res.json("successful");
+            }
+            else{
+                res.json("unsuccessful");
+            }
+        }
+        else{
+            res.json("invalid");
+        }
+    }
+    catch(e){
+        console.log(e);
+    }
+})
+
+app.post("/Home/addQuestions/contributors", async(req, res) => {
+    const {test_name} = req.body;
+    try{
+        const test = await test_data.findOne({ test_name: test_name });
+        if (test) {
+            const contributors = test ? test.other_contributors : "Test not found";
+            res.json(contributors);
+        }
+        else{
+            res.json("no test");
+        }
+    }
+    catch(e){
+        console.log(e);
     }
 })
 

@@ -9,6 +9,7 @@ function New_test(){
     const [test_name, setTestname] = useState('');
     const [test_author, setAuthor] = useState('');
     const [no_of_questions, setNumber] = useState('');
+    const [author_email, setEmail] = useState('');
 
     const history = useNavigate();
     const location = useLocation();
@@ -28,7 +29,7 @@ function New_test(){
 
         try{
             await axios.post("http://localhost:8000/Home/newTest", {
-                test_name, test_author, no_of_questions
+                test_name, test_author, author_email, no_of_questions
             })
             .then(res => {
                 if(res.data == "exist"){
@@ -70,6 +71,12 @@ function New_test(){
                         <td>Enter your name:</td>
                         <td>
                             <input className = "text_box" type = "text" onChange = {(e) => { setAuthor(e.target.value) } } placeholder = "Author Name"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Author email id:</td>
+                        <td>
+                            <input className = "text_box" type = "text" onChange = {(e) => { setEmail(e.target.value) } } placeholder = "Author email id"/>
                         </td>
                     </tr>
                     <tr>

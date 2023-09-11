@@ -5,7 +5,7 @@ const WhatGPT3 = () => {
   return (
     <div className="quiz__whatproctor" id="proctor">
     <div className="quiz__whatproctor-feature">
-      <Feature title="What is new ??"/>
+      <Feature title="What is new??"/>
     </div>
       <div className="quiz__whatproctor-heading">
         <h1 className="gradient__text"> Experience the Real Environment of Exam</h1>

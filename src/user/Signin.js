@@ -41,7 +41,7 @@ function Signin() {
         <div className="userSignin">
             <div className="user_signin_form">
                 <form className="uSignin_form">
-                    <h1 className = "heading_signin">Create a new account on Quizwizard</h1>
+                    <h1 className = "heading_signin">Login to your account</h1>
                     <div className="email_id_field">
                         <label>Enter your email ID: </label><br/>
                         <input type="text" onChange = {(e) => setEmail(e.target.value)} placeholder="Enter your email ID" />

@@ -56,3 +56,50 @@
     cursor: pointer;
     background-color: lightgreen;
 }
+.delete_test_btn{
+    cursor: pointer;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px;
+    height: 50px;
+    width: 200px;
+}
+.add_contributor{
+    cursor: pointer;
+    font-weight: bolder;
+    font-size: 20px;
+    margin: 10px;
+}
+.add_contributor_popup{
+    border: 1px solid black;
+}
+.field{
+    margin: 10px;
+}
+.add_contri{
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.contri_label{
+    margin: 10px;
+    font-size: 20px;
+}
+.contri_input{
+    margin: 10px;
+    font-size: 20px;
+}
+.contri_btn{
+    cursor: pointer;
+    background-color: lightblue;
+    border-radius: 5px;
+    font-size: 20px;
+    width: 70px;
+    height: 30px;
+    transition: background-color 0.75s;
+}
+.contri_btn:hover{
+    background-color: lightgreen;
+}

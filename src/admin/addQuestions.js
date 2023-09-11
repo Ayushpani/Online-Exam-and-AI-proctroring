@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Popup from 'reactjs-popup';
 import AWS from 'aws-sdk';
@@ -7,10 +7,20 @@ import 'reactjs-popup/dist/index.css';
 import "./css/addQuestions.css";
 
 function AddQuestions() {
+    const history = useNavigate();
     const location = useLocation();
     const test_name = location.state.id;
+    const email = location.state.email_id;
     const [data, setData] = useState([]);
+    const [author_email, setAuthor] = useState('');
+    const [disabled, setDisabled] = useState(true);
+    const [contributors, setContributors] = useState([]);
     useEffect(() => {
+        if (!location.state.id) {
+            history("/Home/existingTest", { state: { id: email } })
+            alert("The test was deleted")
+        }
+        
         axios.post('http://localhost:8000/Home/addQuestions/questions', {
             test_name
         })
@@ -21,6 +31,37 @@ function AddQuestions() {
                 alert("Data couldn't be fetched");
             });
     }, []);
+
+    useEffect(() => {
+        axios.post("http://localhost:8000/Home/addQuestions/author", {
+            test_name
+        })
+            .then(res => {
+                setAuthor(res.data);
+                if (res.data == email) {
+                    setDisabled(false);
+                }
+            })
+            .catch(e => {
+                alert("There was some error retrieving the email of author");
+                console.log(e);
+            });
+    }, []);
+
+    useEffect(() => {
+        axios.post("http://localhost:8000/Home/addQuestions/contributors", {
+            test_name
+        })
+        .then( res => {
+            if (res.data == "no test"){
+                alert("Test not found")
+            }
+            else{
+                setContributors(res.data);
+            }
+        })
+    })
+
     const config = {
         bucketName: process.env.REACT_APP_BUCKET_NAME,
         region: process.env.REACT_APP_REGION,
@@ -38,6 +79,7 @@ function AddQuestions() {
     const [qno, setQno] = useState('');
     const [question, setImage] = useState('');
     const [option, setOption] = useState('');
+    const [newContributor, setContributor] = useState('');
     async function upload(e) {
         AWS.config.update({
             accessKeyId: config.accessKeyId,
@@ -52,10 +94,6 @@ function AddQuestions() {
             Key: window.file.name,
             Body: window.file,
         };
-        const params_retrieve = {
-            Bucket: config.bucketName,
-            Key: window.file.name,
-        }
         var upload = s3
             .putObject(params)
             .on("httpUploadProgress", (e) => {
@@ -69,8 +107,8 @@ function AddQuestions() {
             console.log(err);
             alert("File uploaded successfully.");
         });
-        setImage("https://" + config.bucketName +".s3." + config.region + ".amazonaws.com/" + window.file.name);
-        
+        setImage("https://" + config.bucketName + ".s3." + config.region + ".amazonaws.com/" + window.file.name);
+
         e.preventDefault();
         try {
             await axios.post("http://localhost:8000/Home/addQuestions", {
@@ -81,38 +119,57 @@ function AddQuestions() {
             console.log(e);
         }
     }
-    async function del(qn, question){
-        AWS.config.update({
-            accessKeyId: config.accessKeyId,
-            secretAccessKey: config.secretAccessKey,
-        });
-        const s3 = new AWS.S3({
-            params: {Bucket: config.bucketName},
-            region: config.region,
-        });
-        const key = question.split('/').pop();
-        console.log(key)
-        const params = {
-            Bucket: config.bucketName,
-            Key: key,
-        }
-        try{
-            await s3.deleteObject(params).promise();
-            console.log("Object deleted successfully");
-        }
-        catch(e){
-            console.log(e);
-        }
-        try{
+    async function del(qn) {
+        try {
             await axios.post("http://localhost:8000/Home/addQuestions/delete", {
                 test_name, qn
             })
+                .then(res => {
+                    if (res.data == "Record deleted") {
+                        alert("The record was deleted succesfully");
+                    }
+                    else {
+                        alert("There was some error in deleting the record");
+                    }
+                })
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+    async function deleteTest() {
+        try {
+            await axios.post("http://localhost:8000/Home/addQuestions/deleteTest", {
+                test_name
+            })
+                .then(res => {
+                    if (res.data == "Test deleted") {
+                        history(location.pathname, { replace: true });
+                        history("/Home/existingTest", { state: { id: email } })
+                    }
+                    else {
+                        alert("There was an error deleting the test");
+                    }
+                })
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+    async function addContributor(){
+        try{
+            await axios.post("http://localhost:8000/Home/addQuestions/addContributor", {
+                test_name, newContributor
+            })
             .then(res => {
-                if(res.data == "Record deleted"){
-                    alert("The record was deleted succesfully");
+                if (res.data == "successful") {
+                    alert("The contributor was added")
+                }
+                else if (res.data == "invalid"){
+                    alert("email id doesn't exist");
                 }
                 else{
-                    alert("There was some error in deleting the record");
+                    alert("There was some error");
                 }
             })
         }
@@ -126,6 +183,31 @@ function AddQuestions() {
                 <h1>Add questions to {test_name}</h1>
             </div>
             <div className="existing_questions">
+                <div>
+                    <p>Test author: {author_email}</p>
+                    <p>Contributors:
+                        { contributors.map(i => {
+                            return(
+                                <ol type = "a">
+                                    <li>{i}</li>
+                                </ol>
+                            )
+                        })}
+                    </p>
+                </div>
+                <Popup className="add_contributor_popup" trigger={
+                    <input type="button" disabled={disabled} className="add_contributor" value="&#43; Add another contributor to this test" />} modal nested>
+                        <form>
+                            <div className = "field">
+                                <label className = "contri_label">Enter the email id of the contributor:</label>
+                                <input className = "contri_input" type = "text" onChange = {(e) => setContributor(e.target.value)} placeholder = "Enter the email id"/>
+                            </div>
+                            <div className = "add_contri">
+                                <br/>
+                                <input className = "contri_btn" type = "button" value = "submit" onClick = {addContributor}/>
+                            </div>
+                        </form>
+                </Popup>
                 <table width="100%" border="1" cellspacing="0">
                     <tr>
                         <th>Qn. no.</th>
@@ -137,9 +219,9 @@ function AddQuestions() {
                         return (
                             <tr>
                                 <td><div id="qno">{i.qno}</div></td>
-                                <td><div id="question"><img id = "question_image" src = {i.question}/></div></td>
+                                <td><div id="question"><img id="question_image" src={i.question} /></div></td>
                                 <td><div id="correct_option">{i.option}</div></td>
-                                <td><button onClick = {() => del(i.qno, i.question)}>yes</button></td>
+                                <td><button onClick={() => del(i.qno)}>yes</button></td>
                             </tr>
                         )
                     })}
@@ -183,6 +265,9 @@ function AddQuestions() {
                     </div>
                 </form>
             </Popup>
+            <div>
+                <input type="button" className="delete_test_btn" onClick={(e) => deleteTest()} value="Delete test" />
+            </div>
         </div>
     )
 }

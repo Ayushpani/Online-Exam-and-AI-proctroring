@@ -26,7 +26,7 @@ const Attempt = () => {
     .catch(e => {
       alert("There are no tests right now come back later");
     })
-  })
+  }, [])
 
   const onFrameButtonClick = useCallback(() => {
     navigate("/test/terms");

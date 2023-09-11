@@ -31,6 +31,14 @@ const testSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    author_email:{
+        type: String,
+        required: true
+    },
+    other_contributors:{
+        type: Array,
+        default: []
+    },
     no_of_questions:{
         type: Number,
         required: true
