@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from "react-router-dom"
 import axios from 'axios';
 import "./css/admin.css";
 import Popup from 'reactjs-popup';
@@ -7,8 +8,19 @@ import 'reactjs-popup/dist/index.css';
 function Admin() {
 
     const [data, setData] = useState([]);
+    const location = useLocation();
+    const history = useNavigate();
+
+    function handleLogout(){
+        history(location.pathname, { replace: true });
+        history("/adminLogin");
+    }
 
     useEffect(() => {
+        if(!location.state.id){
+            history("/adminLogin")
+            alert("Please Login first")
+        }
         axios.post("http://localhost:8000/admin")
             .then(res => {
                 setData(res.data)
@@ -61,9 +73,10 @@ function Admin() {
     return (
             <div className="admin_page">
                 <div className = "nav">
-                    <h1>Welcome to the Admin page</h1>
+                    <h1>Welcome to the Admin page {location.state.id}</h1>
                     <hr/>
                 </div>
+                <input type = "button" value = "Logout" onClick = {handleLogout}/>
                 <table border="1" width="50%" cellspacing="0">
                     <tr>
                         <th>Username</th>

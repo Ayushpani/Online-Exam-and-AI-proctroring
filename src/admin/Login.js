@@ -13,6 +13,18 @@ function Login() {
     async function submit(e){
         e.preventDefault();
 
+        if(!email || !password){
+            alert("Enter the email id and password");
+            return false;
+        }
+
+        if (email && password){
+            if (!/.+@gmail\.com/.test(email)) {
+                alert("Enter valid email id");
+                return(false);
+            }
+        }
+
         try{
             await axios.post("http://localhost:8000/Login",{
                 email,password

@@ -1,7 +1,6 @@
 const express = require("express");
-const { collection, test_data, questions, user_details } = require("./mongo")
+const { adminDetail, collection, test_data, questions, user_details } = require("./mongo")
 const cors =require("cors");
-const { rmSync } = require("fs");
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -9,6 +8,28 @@ app.use(cors());
 
 app.get("/", cors(), (req, res) => {
 
+})
+
+app.post("/adminLogin", async(req, res) => {
+    const { email, password } = req.body;
+
+    try{
+        const admin = await adminDetail.findOne({email: email});
+        if (admin) {
+            if (admin.password == password) {
+                res.json("admin valid");
+            }
+            else{
+                res.json("wrong password");
+            }
+        }
+        else{
+            res.json("no admin");
+        }
+    }
+    catch(e){
+        console.log(e);
+    }
 })
 
 app.post("/admin", async(req, res) => {

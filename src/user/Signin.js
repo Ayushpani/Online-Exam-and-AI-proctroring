@@ -11,6 +11,19 @@ function Signin() {
     const [password, setPasswd] = useState('');
 
     async function authenticate(e){
+
+        if(!email || !password){
+            alert("Enter the email id and password");
+            return false;
+        }
+
+        if (email && password){
+            if (!/.+@gmail\.com/.test(email)) {
+                alert("Enter valid email id");
+                return(false);
+            }
+        }
+
         try{
             axios.post("http://localhost:8000/user/Signin", {
                 email, password

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Admin from "./admin/admin";
+import AdminLogin from "./admin/admin_login";
 import Home from "./admin/Home";
 import Login from "./admin/Login";
 import NewTest from "./admin/new_test"
@@ -22,6 +23,7 @@ root.render(
 		<Router>
 			<Routes>
 				<Route path="/" element={<App />} />
+				<Route path="/adminLogin" element={<AdminLogin />} />
 				<Route path="/admin" element={<Admin />} />
 				<Route path="/Login" element={<Login />} />
 				<Route path="/Home" element={<Home />} />

@@ -27,6 +27,18 @@ function New_test(){
     async function submit(e){
         e.preventDefault();
 
+        if(!test_author || !test_name || !no_of_questions || !author_email){
+            alert("Enter all the required details");
+            return false;
+        }
+
+        if (test_author && test_name && no_of_questions && author_email){
+            if (!/.+@gmail\.com/.test(author_email)) {
+                alert("Enter valid email id");
+                return(false);
+            }
+        }
+
         try{
             await axios.post("http://localhost:8000/Home/newTest", {
                 test_name, test_author, author_email, no_of_questions

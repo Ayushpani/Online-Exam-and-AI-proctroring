@@ -13,6 +13,19 @@ function Signup() {
     const [password, setPasswd] = useState('');
 
     async function createUser(e){
+
+        if(!name || !email || !dob || !password){
+            alert("Enter the email id and password");
+            return false;
+        }
+
+        if (name && email && dob && password){
+            if (!/.+@gmail\.com/.test(email)) {
+                alert("Enter valid email id");
+                return(false);
+            }
+        }
+
         try{
             axios.post("http://localhost:8000/user/Signup", {
                 name, email, dob, password

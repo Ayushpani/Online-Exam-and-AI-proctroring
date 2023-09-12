@@ -81,6 +81,12 @@ function AddQuestions() {
     const [option, setOption] = useState('');
     const [newContributor, setContributor] = useState('');
     async function upload(e) {
+
+        if(!qno || !question || !option){
+            alert("Enter the required details");
+            return false;
+        }
+
         AWS.config.update({
             accessKeyId: config.accessKeyId,
             secretAccessKey: config.secretAccessKey,
@@ -157,6 +163,19 @@ function AddQuestions() {
         }
     }
     async function addContributor(){
+
+        if(!newContributor){
+            alert("Enter the email id of the contributor");
+            return false;
+        }
+
+        if (newContributor){
+            if (!/.+@gmail\.com/.test(newContributor)) {
+                alert("Enter valid email id");
+                return(false);
+            }
+        }
+
         try{
             await axios.post("http://localhost:8000/Home/addQuestions/addContributor", {
                 test_name, newContributor

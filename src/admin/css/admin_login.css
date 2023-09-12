@@ -1,0 +1,35 @@
+.admin_login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.btn{
+    margin: 10px;
+    width: 100px;
+    height: 40px;
+    font-size: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: lightblue;
+    transition: background-color 0.75s;
+}
+.btn:hover{
+    background-color: lightgreen;
+}
+#btn{
+    text-align: center;
+}
+#heading_admin_login{
+    margin: 10px;
+    text-align: center;
+}
+.email_label, .email_input, .passwd_label, .passwd_input{
+    margin: 10px;
+    font-size: 20px;
+}
+.email_input, .passwd_input{
+    height: 40px;
+    border-radius: 10px;
+    text-align: center;
+}
