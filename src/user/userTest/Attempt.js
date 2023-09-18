@@ -3,11 +3,6 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios'
 import Property1Default from "./Property1Default";
 import styles from "./Attempt.module.css";
-import test1 from './imagesProj/computertest@2x.png'
-import test2 from './imagesProj/computertest1@2x.png'
-import test3 from './imagesProj/computertest2@2x.png'
-import test4 from './imagesProj/computertest3@2x.png'
-import test5 from './imagesProj/computertest4@2x.png'
 import onlinex from './imagesProj/examonline@2x.png'
 import frame1 from './imagesProj/frame1.svg'
 import insta from './imagesProj/instagram.svg'
@@ -19,7 +14,7 @@ const Attempt = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios.post("http://localhost:8000/Home/existingTest")
+    axios.post("http://localhost:8000/Home/fetchTest")
     .then(res => {
       setData(res.data);
     })

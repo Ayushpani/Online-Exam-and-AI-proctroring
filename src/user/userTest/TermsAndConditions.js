@@ -2,6 +2,8 @@ import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./TermsAndConditions.module.css";
 import frame from './imagesProj/frame.svg'
+import axios from 'axios';
+
 const TermsAndConditions = () => {
   const navigate = useNavigate();
 
@@ -12,6 +14,29 @@ const TermsAndConditions = () => {
   const onBackClick = useCallback(() => {
     navigate("/test");
   }, [navigate]);
+
+  async function captureImage(){
+    try{
+      var checkbox = document.getElementById("checkbox")
+      if(checkbox.checked){
+        await axios.post("http://localhost:8000/scripts/captureImage")
+        .then(res => {
+          if(res.data == "error"){
+            alert("There was a error executing the script");
+          }
+        })
+        .catch(e => {
+          console.log(e)
+        })
+      }
+      else{
+        return false;
+      }
+    }
+    catch(e){
+      console.log(e)
+    }
+  }
 
   return (
     <main className={styles.termsAndConditions}>
@@ -71,7 +96,7 @@ const TermsAndConditions = () => {
       <div className={styles.iAgreeTo}>
         I agree to the above terms and conditions
       </div>
-      <input className={styles.frame3} type="checkbox" required />
+      <input className={styles.frame3} type="checkbox" id = "checkbox" onClick = {captureImage} required />
     </main>
   );
 };

@@ -1,4 +1,5 @@
 const express = require("express");
+const { exec } = require('child_process');
 const { adminDetail, collection, test_data, questions, user_details } = require("./mongo")
 const cors =require("cors");
 const app = express()
@@ -9,6 +10,18 @@ app.use(cors());
 app.get("/", cors(), (req, res) => {
 
 })
+
+app.post("/scripts/captureImage", async(req, res) => {
+    exec('python pyScripts/first.py', (error, stdout, stderr) => {
+        if(error){
+            console.log(error);
+            res.json("error");
+        }
+        else{
+            res.json("success");
+        }
+    });
+});
 
 app.post("/adminLogin", async(req, res) => {
     const { email, password } = req.body;
@@ -141,6 +154,23 @@ app.post("/Home/existingTest", async(req, res) => {
     const {email} = req.body;
     try{
         const tests = await test_data.find({$or: [{ author_email: email }, { other_contributors: email }]});
+        if (tests){
+            res.json(tests)
+        }
+        else{
+            res.json("no test");
+        }
+    }
+    catch(e){
+        res.json("not exist")
+    }
+
+})
+
+app.post("/Home/fetchTest", async(req, res) => {
+    const {email} = req.body;
+    try{
+        const tests = await test_data.find({});
         if (tests){
             res.json(tests)
         }

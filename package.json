@@ -15,6 +15,7 @@
     "axios": "^1.4.0",
     "body-parser": "^1.20.2",
     "bootstrap": "^5.3.1",
+    "child_process": "^1.0.2",
     "components": "^0.1.0",
     "cors": "^2.8.5",
     "crypto-browserify": "^3.12.0",
