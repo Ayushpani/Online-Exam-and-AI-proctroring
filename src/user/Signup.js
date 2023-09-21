@@ -35,7 +35,7 @@ function Signup() {
                     alert("User already exists");
                 }
                 else{
-                    history("/Uhome");
+                    history("/Uhome", { state: { id: email }});
                 }
             })
             .catch(e => {

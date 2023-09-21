@@ -11,14 +11,14 @@ app.get("/", cors(), (req, res) => {
 
 })
 
-app.post("/scripts/captureImage", async(req, res) => {
+app.post('/test/check', async(req, res) => {
     exec('python pyScripts/first.py', (error, stdout, stderr) => {
         if(error){
             console.log(error);
             res.json("error");
         }
         else{
-            res.json("success");
+            res.json("executed");
         }
     });
 });

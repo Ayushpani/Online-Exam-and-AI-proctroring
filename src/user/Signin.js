@@ -30,7 +30,7 @@ function Signin() {
             })
             .then(res => {
                 if(res.data == "exists"){
-                    history("/Uhome");
+                    history("/Uhome", { state: { id: email}});
                 }
                 else if(res.data == "incorrect password"){
                     alert("Please enter the correct password");

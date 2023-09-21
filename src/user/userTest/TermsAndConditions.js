@@ -1,10 +1,13 @@
 import { useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./TermsAndConditions.module.css";
 import frame from './imagesProj/frame.svg'
-import axios from 'axios';
 
 const TermsAndConditions = () => {
+
+  const location = useLocation();
+  const email = location.state.id;
+  console.log(email);
   const navigate = useNavigate();
 
   const onFrame2Click = useCallback(() => {
@@ -16,26 +19,7 @@ const TermsAndConditions = () => {
   }, [navigate]);
 
   async function captureImage(){
-    try{
-      var checkbox = document.getElementById("checkbox")
-      if(checkbox.checked){
-        await axios.post("http://localhost:8000/scripts/captureImage")
-        .then(res => {
-          if(res.data == "error"){
-            alert("There was a error executing the script");
-          }
-        })
-        .catch(e => {
-          console.log(e)
-        })
-      }
-      else{
-        return false;
-      }
-    }
-    catch(e){
-      console.log(e)
-    }
+    navigate("/test/check", { state: { id: email}});
   }
 
   return (

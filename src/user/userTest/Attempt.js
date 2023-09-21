@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from 'axios'
 import Property1Default from "./Property1Default";
 import styles from "./Attempt.module.css";
@@ -12,6 +12,8 @@ import logo from './imagesProj/Logo@2x.png'
 const Attempt = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
+  const location = useLocation();
+  const email = location.state.id;
 
   useEffect(() => {
     axios.post("http://localhost:8000/Home/fetchTest")
@@ -24,7 +26,7 @@ const Attempt = () => {
   }, [])
 
   const onFrameButtonClick = useCallback(() => {
-    navigate("/test/terms");
+    navigate("/test/terms", { state: { id: email }});
   }, [navigate]);
 
   const onFrameButton1Click = useCallback(() => {
@@ -48,7 +50,7 @@ const Attempt = () => {
   }, [navigate]);
 
   const onTestContainerClick = useCallback(() => {
-    navigate("/test");
+    navigate("/test", { state: { id: email }});
   }, [navigate]);
 
   const onFacebookClick = useCallback(() => {

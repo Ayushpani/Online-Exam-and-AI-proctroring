@@ -5,14 +5,22 @@ import logo from '../../assets/logo2.png'
 import { useNavigate } from 'react-router-dom';
 // BEM -> block element modifier
 
-const Menu = () => (
-  <><p><a href="#home">Home</a></p>
+const Menu = ({email}) => {
+
+  const history = useNavigate();
+
+  const test = async() => {
+    history("/test", { state: { id: email }});
+  }
+  return(
+    <><p><a href="#home">Home</a></p>
           <p><a href="#home">What is QuizWizard ?</a></p>
-          <p><a href="/test">Tests</a></p>
+          <p onClick = {test}>Tests</p>
           </>
-          
-)
-const Navbar = () => {
+  )
+}
+
+const Navbar = ({email}) => {
   const [toggleMenu, setToggleMenu] = useState(false)
   const history = useNavigate();
   function adminLogin(){
@@ -25,7 +33,7 @@ const Navbar = () => {
           <img src={logo} height={100}  alt="logo" />
         </div>
         <div className="quiz__navbar-links_container">
-          <Menu />
+          <Menu email = {email}/>
         </div>
       </div>
       <div className="quiz__navbar-sign">
@@ -39,7 +47,7 @@ const Navbar = () => {
         {toggleMenu && (
         <div className="quiz__navbar-menu_container scale-up-center">
           <div className="quiz__navbar-menu_container-links">
-         <Menu />
+         <Menu email = {email}/>
           </div>
           <div className="quiz__navbar-menu_container-links-sign">
             <p>Sign in</p>

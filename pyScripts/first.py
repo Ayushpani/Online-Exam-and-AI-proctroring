@@ -1,127 +1,60 @@
+from flask import Flask, Response, jsonify
+from flask_cors import CORS
+from decouple import config
 import cv2
-import tkinter as tk
-from tkinter import ttk
-from torch import hub, torch
+import io
+import boto3
+import botocore
 
-class First:
-    def __init__(self, window, window_title):
-        self.window = window
-        self.window.title(window_title)
-        
-        # Open the camera for video capture
-        self.video_capture = cv2.VideoCapture(0)
-        
-        if not self.video_capture.isOpened():
-            print("Error: Could not open the camera.")
-            exit()
-        
-        # Create a label to display the video feed
-        self.video_label = ttk.Label(self.window)
-        self.video_label.pack()
-        
-        # Create a button to capture an image
-        capture_button = ttk.Button(self.window, text="Capture Image", command=self.capture_image)
-        capture_button.pack()
-        
-        self.model = self.load_model()
-        self.classes = self.model.names
-        self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
-        
-        # Start the video feed update
-        self.update_video_feed()
-        
-        self.window.protocol("WM_DELETE_WINDOW", self.on_closing)
-    
-    def load_model(self):
-        '''
-        Loads Yolo5 model from pytorch hub
-        :return: Trained Pytorch model
-        '''
-        model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained = True)
-        return model
-    
-    def on_closing(self):
-        # Release the camera when the GUI is closed
-        self.video_capture.release()
-        self.window.destroy()
-    
-    def score_frame(self, frame):
-        '''
-        Takes a single frame as input, and scores the frame using yolo5 model
-        :return: Labels and Coordinates of objects detected by model in the frame.
-        '''
-        self.model.to(self.device)
-        frame = [frame]
-        results = self.model(frame)
-        labels, cord = results.xyxyn[0][:, -1].cpu().numpy(), results.xyxyn[0][:, :-1].cpu().numpy()
-        return labels, cord
-    
-    def class_to_label(self, x):
-        '''
-        For a given label value, return correspondig string label.
-        :param x: numeric label
-        :return: corresponding string label
-        '''
-        return self.classes[int(x)]
-    
-    def plot_boxes(self, results, frame):
-        '''
-        Takes a frame and its results as input, and plots the bounding boxes and label on to the frame.
-        :param results: contains labels and coordinates predicted by model on the given frame.
-        :param frame: Frame which has been scored
-        :return: Frame with bounding boxes and labels plotted on it
-        '''
-        labels, cord = results
-        n = len(labels)
-        x_shape, y_shape = frame.shape[1], frame.shape[0]
-        for i in range(n):
-            row = cord[i]
-            if row[4] >= 0.2:
-                x1, y1, x2, y2 = int(row[0] * x_shape), int(row[1] * y_shape), int(row[2] * x_shape), int(row[3] * y_shape)
-                bgr = (0, 255, 0)
-                cv2. rectangle(frame, (x1, y1), (x2, y2), bgr, 2)
-                cv2.putText(frame, self.class_to_label(labels[i]), (x1, y1), cv2.FONT_HERSHEY_SIMPLEX, 0.9, bgr, 2)
-        
-        return frame
+app = Flask(__name__)
+CORS(app)
+camera = cv2.VideoCapture(0)  # 0 for the default camera
 
-    # Create a function to capture and save the image
-    def capture_image(self):
-        # Capture a single frame from the video feed
-        ret, frame = self.video_capture.read()
+AWS_ACCESS_KEY_ID = config('REACT_APP_ACCESS')
+AWS_SECRET_ACCESS_KEY = config('REACT_APP_SECRET')
+AWS_REGION = config('REACT_APP_REGION')
+bucket_name = config('REACT_APP_BUCKET_NAME')
 
-        if not ret:
-            return
+def generate_frames():
 
-        # Specify the file path to save the captured image
-        image_path = "captured_image.jpg"
+    while True:
+        success, frame = camera.read()
+        if not success:
+            break
+        else:
+            ret, buffer = cv2.imencode('.jpg', frame)
+            if ret:
+                frame = buffer.tobytes()
+                yield (b'--frame\r\n'
+                       b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
+@app.route('/video_feed')
+def video_feed():
+    return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/capture_image/<email>')
+def capture_image(email):
+    pEmail = email
+    ret, frame = camera.read()
+    if ret:
         # Save the captured frame as an image
-        cv2.imwrite(image_path, frame)
+        _, buffer = cv2.imencode('.jpg', frame)
+        image_bytes = buffer.tobytes()
+        s3 = boto3.client('s3',aws_access_key_id=AWS_ACCESS_KEY_ID,
+                        aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+                        region_name=AWS_REGION)
+        object_key = f"people_images/{pEmail}.jpg"
+        try:
+            # Upload the image to S3
+            s3.upload_fileobj(io.BytesIO(image_bytes), bucket_name, object_key)
+            print(f"Image uploaded to S3 bucket: s3://{bucket_name}/{object_key}")
+        except botocore.exceptions.NoCredentialsError:
+            print("AWS credentials not found.")
+        except Exception as e:
+            print(f"Error uploading image to S3: {e}")
+        return jsonify({'message': 'captured'})
+    else:
+        return jsonify({'message': 'failed'})
 
-    # Create a function to update the video feed
-    def update_video_feed(self):
-        # Read a frame from the video capture
-        ret, frame = self.video_capture.read()
-
-        if ret:
-            
-            results = self.score_frame(frame)
-            frame = self.plot_boxes(results, frame)
-            
-            # Convert the frame to RGB format for displaying in Tkinter
-            #frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            # Create a PhotoImage object from the frame
-            photo = tk.PhotoImage(data=cv2.imencode('.ppm', frame)[1].tobytes())
-
-            # Update the label with the new frame
-            self.video_label.config(image=photo)
-            self.video_label.image = photo
-
-            # Schedule the next update after a delay (in milliseconds)
-            self.video_label.after(10, self.update_video_feed)
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = First(root, "Image capture app")
-    # Start the GUI event loop
-    root.mainloop()
+if __name__ == '__main__':
+    app.run(debug=True)
