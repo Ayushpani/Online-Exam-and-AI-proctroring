@@ -15,6 +15,7 @@ import UserApp from './user/App';
 import Test from './user/userTest/Attempt';
 import Terms from './user/userTest/TermsAndConditions'
 import Check from './user/userTest/check'
+import StartTest from './user/userTest/Test'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
@@ -37,6 +38,7 @@ root.render(
 				<Route path='/test' element={<Test />} />
 				<Route path='/test/terms' element={<Terms />} />
 				<Route path='/test/check' element={<Check />} />
+				<Route path='/test/startTest' element={<StartTest />} />
 			</Routes>
 		</Router>
 	</React.StrictMode>

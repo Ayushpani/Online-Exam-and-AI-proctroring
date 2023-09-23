@@ -1,7 +1,8 @@
 const express = require("express");
 const { exec } = require('child_process');
+const treeKill = require('tree-kill');
 const { adminDetail, collection, test_data, questions, user_details } = require("./mongo")
-const cors =require("cors");
+const cors = require("cors");
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -11,63 +12,91 @@ app.get("/", cors(), (req, res) => {
 
 })
 
-app.post('/test/check', async(req, res) => {
-    exec('python pyScripts/first.py', (error, stdout, stderr) => {
-        if(error){
+let process = null;
+app.post('/test/check', async (req, res) => {
+    process = exec('python pyScripts/first.py', (error, stdout, stderr) => {
+        if (error) {
             console.log(error);
             res.json("error");
         }
-        else{
+        else {
             res.json("executed");
         }
     });
 });
 
-app.post("/adminLogin", async(req, res) => {
+app.post('/test/kill', async (req, res) => {
+    const pyProcesses = 'tasklist | findstr "python"';
+    exec(pyProcesses, (error, stdout) => {
+        if (error) {
+            res.json("error listing");
+        }
+        const processList = stdout.split('\n');
+        processList.forEach((processInfo) => {
+            const match = processInfo.match(/\d+/);
+            if (match) {
+                const pid = match[0];
+                console.log(`Killing python process with PID ${pid}`);
+                treeKill(pid, 'SIGTERM', (err) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else{
+                        check = 1;
+                        console.log(`Process with pid ${pid} killed successfully`);
+                    };
+                })
+            }
+        })
+        res.json('killed');
+    });
+});
+
+app.post("/adminLogin", async (req, res) => {
     const { email, password } = req.body;
 
-    try{
-        const admin = await adminDetail.findOne({email: email});
+    try {
+        const admin = await adminDetail.findOne({ email: email });
         if (admin) {
             if (admin.password == password) {
                 res.json("admin valid");
             }
-            else{
+            else {
                 res.json("wrong password");
             }
         }
-        else{
+        else {
             res.json("no admin");
         }
     }
-    catch(e){
+    catch (e) {
         console.log(e);
     }
 })
 
-app.post("/admin", async(req, res) => {
+app.post("/admin", async (req, res) => {
     const data = await collection.find();
-    try{
+    try {
         res.json(data)
     }
-    catch(e){
+    catch (e) {
         res.json("no user");
     }
 })
 
-app.post("/admin/delete", async(req, res) => {
-    const {email} = req.body
-    try{
-        await collection.deleteOne({email: email});
+app.post("/admin/delete", async (req, res) => {
+    const { email } = req.body
+    try {
+        await collection.deleteOne({ email: email });
         res.json("deleted successfully");
     }
-    catch(e){
+    catch (e) {
         console.log(e);
     }
 })
 
-app.post("/admin/add", async(req, res) => {
-    const{name, email, password} = req.body
+app.post("/admin/add", async (req, res) => {
+    const { name, email, password } = req.body
 
     const data = {
         name: name,
@@ -75,194 +104,197 @@ app.post("/admin/add", async(req, res) => {
         password: password
     }
 
-    try{
-        const check = await collection.findOne({email: email})
+    try {
+        const check = await collection.findOne({ email: email })
 
-        if(check){
+        if (check) {
             res.json("exist")
         }
-        else{
+        else {
             res.json("not exist")
             await collection.insertMany([data])
         }
     }
-    catch(e){
+    catch (e) {
         res.json("not exist")
     }
 
 })
 
-app.post("/Login", async(req, res) => {
-    const{name,email, password} = req.body
+app.post("/Login", async (req, res) => {
+    const { name, email, password } = req.body
 
-    try{
-        const check = await collection.findOne({email: email});
+    try {
+        const check = await collection.findOne({ email: email });
 
-        if(check){
+        if (check) {
             const password_check = check ? check.password : 'User not found';
-            if(password_check == password){
+            if (password_check == password) {
                 res.json("exists");
             }
-            else{
+            else {
                 res.json("incorrect password");
             }
         }
-        else{
+        else {
             res.json("not exist")
         }
     }
-    catch(e){
+    catch (e) {
         res.json("not exist")
     }
 
 })
 
-app.post("/Home/newTest", async(req, res) => {
-    const{test_name, test_author, author_email, no_of_questions} = req.body
+app.post("/Home/newTest", async (req, res) => {
+    const { test_name, test_author, author_email, no_of_questions } = req.body
 
     const data = {
         test_name: test_name,
         test_author: test_author,
-        author_email: author_email,
-        no_of_questions: no_of_questions
+        author_email: author_email
     }
 
-    try{
-        const check = await test_data.findOne({test_name: test_name})
+    try {
+        const check = await test_data.findOne({ test_name: test_name })
 
-        if(check){
+        if (check) {
             res.json("exist")
         }
-        else{
-            const check1 = await collection.findOne({email: author_email});
-            if(check1){
+        else {
+            const check1 = await collection.findOne({ email: author_email });
+            if (check1) {
                 res.json("not exist")
                 await test_data.insertMany([data])
             }
-            else{
+            else {
                 res.json("Wrong username")
             }
         }
     }
-    catch(e){
+    catch (e) {
         res.json("not exist")
     }
 
 })
 
-app.post("/Home/existingTest", async(req, res) => {
-    const {email} = req.body;
-    try{
-        const tests = await test_data.find({$or: [{ author_email: email }, { other_contributors: email }]});
-        if (tests){
+app.post("/Home/existingTest", async (req, res) => {
+    const { email } = req.body;
+    try {
+        const tests = await test_data.find({ $or: [{ author_email: email }, { other_contributors: email }] });
+        if (tests) {
             res.json(tests)
         }
-        else{
+        else {
             res.json("no test");
         }
     }
-    catch(e){
+    catch (e) {
         res.json("not exist")
     }
 
 })
 
-app.post("/Home/fetchTest", async(req, res) => {
-    const {email} = req.body;
-    try{
+app.post("/Home/fetchTest", async (req, res) => {
+    const { email } = req.body;
+    try {
         const tests = await test_data.find({});
-        if (tests){
+        if (tests) {
             res.json(tests)
         }
-        else{
+        else {
             res.json("no test");
         }
     }
-    catch(e){
+    catch (e) {
         res.json("not exist")
     }
 
 })
 
-app.post("/Home/addQuestions", async(req, res) => {
-    const{test_name, qno, question, option} = req.body
+app.post("/Home/addQuestions", async (req, res) => {
+    const { test_name, qno, question, option } = req.body
     const data = {
         test_name: test_name,
         qno: qno,
         question: question,
         option: option
     }
-    try{
-        await questions.insertMany([data])
+    try {
+        const test = await test_data.findOne({ test_name: test_name });
+        if (test) {
+            await test_data.updateOne({ test_name: test_name }, { $inc: { no_of_questions: 1 } });
+            await questions.insertMany([data])
+        }
     }
-    catch(e){
+    catch (e) {
         console.log(e);
     }
 })
 
-app.post("/Home/addQuestions/questions", async(req, res) => {
-    const {test_name} = req.body
-    const data = await questions.find({test_name: test_name});
-    try{
+app.post("/Home/addQuestions/questions", async (req, res) => {
+    const { test_name } = req.body
+    const data = await questions.find({ test_name: test_name });
+    try {
         res.json(data)
     }
-    catch(e){
+    catch (e) {
         res.json("not exist")
     }
 
 })
 
-app.post("/Home/addQuestions/delete", async(req, res) => {
-    const {test_name, qn} = req.body
-    try{
-        const ans = await questions.deleteOne({test_name: test_name, qno: qn})
-        if(ans.deletedCount == 1){
+app.post("/Home/addQuestions/delete", async (req, res) => {
+    const { test_name, qn } = req.body
+    try {
+        const ans = await questions.deleteOne({ test_name: test_name, qno: qn })
+        if (ans.deletedCount == 1) {
             res.json("Record deleted");
         }
     }
-    catch(e){
+    catch (e) {
         console.log(e);
-        
+
     }
 })
 
-app.post("/Home/addQuestions/deleteTest", async(req, res) => {
-    const {test_name} = req.body;
-    try{
-        const ans = await questions.deleteMany({test_name: test_name});
-        const ans1 = await test_data.deleteOne({test_name: test_name});
-        if(ans, ans1){
+app.post("/Home/addQuestions/deleteTest", async (req, res) => {
+    const { test_name } = req.body;
+    try {
+        const ans = await questions.deleteMany({ test_name: test_name });
+        const ans1 = await test_data.deleteOne({ test_name: test_name });
+        if (ans, ans1) {
             res.json("Test deleted");
         }
-        else{
+        else {
             res.json("Not deleted");
         }
     }
-    catch(e){
+    catch (e) {
         console.log(e);
     }
 })
 
-app.post("/Home/addQuestions/author", async(req, res) =>{
-    const {test_name} = req.body;
-    try{
-        const ans = await test_data.findOne({test_name: test_name})
-        if(ans){
+app.post("/Home/addQuestions/author", async (req, res) => {
+    const { test_name } = req.body;
+    try {
+        const ans = await test_data.findOne({ test_name: test_name })
+        if (ans) {
             const author_email = ans ? ans.author_email : 'User not found';
             res.json(author_email);
         }
-        else{
+        else {
             res.json("No such test");
         }
     }
-    catch(e){
+    catch (e) {
         console.log(e);
     }
 })
 
-app.post("/Home/addQuestions/addContributor", async(req, res) => {
-    const {test_name, newContributor} = req.body;
-    try{
+app.post("/Home/addQuestions/addContributor", async (req, res) => {
+    const { test_name, newContributor } = req.body;
+    try {
         const check = await collection.findOne({ email: newContributor });
         if (check) {
             const document = await test_data.findOne({ test_name: test_name });
@@ -271,79 +303,102 @@ app.post("/Home/addQuestions/addContributor", async(req, res) => {
                 await document.save();
                 res.json("successful");
             }
-            else{
+            else {
                 res.json("unsuccessful");
             }
         }
-        else{
+        else {
             res.json("invalid");
         }
     }
-    catch(e){
+    catch (e) {
         console.log(e);
     }
 })
 
-app.post("/Home/addQuestions/contributors", async(req, res) => {
-    const {test_name} = req.body;
-    try{
+app.post("/Home/addQuestions/deleteContributors", async (req, res) => {
+    const { test_name, toDelete } = req.body;
+    try {
+        const test = await test_data.findOne({ test_name: test_name });
+        if (test) {
+            const document = await test_data.findOne({ $and: [{ test_name: test_name }, { other_contributors: toDelete }] });
+            if (document) {
+                await test_data.updateOne({ test_name: test_name }, { $pull: { other_contributors: toDelete } });
+                res.json("removed");
+            }
+            else {
+                res.json("no contributor");
+            }
+        }
+        else {
+            res.json("no test");
+        }
+    }
+    catch (e) {
+        console.log(e);
+    }
+})
+
+app.post("/Home/addQuestions/contributors", async (req, res) => {
+    const { test_name } = req.body;
+    try {
         const test = await test_data.findOne({ test_name: test_name });
         if (test) {
             const contributors = test ? test.other_contributors : "Test not found";
             res.json(contributors);
         }
-        else{
+        else {
             res.json("no test");
         }
     }
-    catch(e){
+    catch (e) {
         console.log(e);
     }
 })
 
-app.post("/user/Signup", async(req, res) => {
-    const {name, email, dob, password} = req.body;
+app.post("/user/Signup", async (req, res) => {
+    const { name, email, dob, password } = req.body;
     const data = {
         name: name,
         email: email,
         dob: dob,
         password: password
     }
-    try{
-        const check = await user_details.findOne({email: email});
-        if(check){
+    try {
+        const check = await user_details.findOne({ email: email });
+        if (check) {
             res.json("exists")
         }
-        else{
+        else {
             res.json("not exists")
             user_details.insertMany([data])
         }
     }
-    catch(e){
+    catch (e) {
         console.log(e);
     }
 })
 
-app.post("/user/Signin", async(req, res) => {
-    const{email, password} = req.body
+app.post("/user/Signin", async (req, res) => {
+    const { email, password } = req.body
 
-    try{
-        const check = await user_details.findOne({email: email});
-        
-        if(check){
+    try {
+        const check = await user_details.findOne({ email: email });
+
+        if (check) {
             const password_check = check ? check.password : 'User not found';
-            if(password_check == password){
+            if (password_check == password) {
                 res.json("exists");
             }
-            else{
+            else {
                 res.json("incorrect password");
             }
         }
-        else{
+        else {
             res.json("not exist")
         }
     }
-    catch(e){
+    catch (e) {
         res.json("not exist")
     }
 

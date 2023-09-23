@@ -52,7 +52,7 @@ const testSchema = new mongoose.Schema({
     },
     no_of_questions:{
         type: Number,
-        required: true
+        default: 0
     }
 });
 

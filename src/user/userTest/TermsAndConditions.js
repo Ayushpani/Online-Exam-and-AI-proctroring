@@ -7,7 +7,8 @@ const TermsAndConditions = () => {
 
   const location = useLocation();
   const email = location.state.id;
-  console.log(email);
+  const test_name = location.state.test_name;
+  console.log(email, test_name);
   const navigate = useNavigate();
 
   const onFrame2Click = useCallback(() => {
@@ -19,7 +20,7 @@ const TermsAndConditions = () => {
   }, [navigate]);
 
   async function captureImage(){
-    navigate("/test/check", { state: { id: email}});
+    navigate("/test/check", { state: { id: email, test_name: test_name}});
   }
 
   return (

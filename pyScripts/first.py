@@ -5,10 +5,29 @@ import cv2
 import io
 import boto3
 import botocore
+import sys
+import signal
+import os
 
 app = Flask(__name__)
 CORS(app)
 camera = cv2.VideoCapture(0)  # 0 for the default camera
+
+def handle_sigint(signum, frame):
+    print("Received SIGINT. Cleaning up and exiting...")
+    
+    # Release the camera and any resources
+    camera.release()
+    cv2.destroyAllWindows()
+    
+    os.kill(os.getpid(), signal.SIGINT)
+    os.kill(os.getpid(), signal.SIGTERM)
+    # Exit the application
+    sys.exit(0)
+
+# Register the signal handler for SIGINT
+signal.signal(signal.SIGINT, handle_sigint)
+signal.signal(signal.SIGTERM, handle_sigint)
 
 AWS_ACCESS_KEY_ID = config('REACT_APP_ACCESS')
 AWS_SECRET_ACCESS_KEY = config('REACT_APP_SECRET')
@@ -57,4 +76,4 @@ def capture_image(email):
         return jsonify({'message': 'failed'})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)

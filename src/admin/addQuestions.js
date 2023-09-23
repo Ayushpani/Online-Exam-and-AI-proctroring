@@ -7,6 +7,7 @@ import 'reactjs-popup/dist/index.css';
 import "./css/addQuestions.css";
 
 function AddQuestions() {
+
     const history = useNavigate();
     const location = useLocation();
     const test_name = location.state.id;
@@ -15,6 +16,7 @@ function AddQuestions() {
     const [author_email, setAuthor] = useState('');
     const [disabled, setDisabled] = useState(true);
     const [contributors, setContributors] = useState([]);
+
     useEffect(() => {
         if (!location.state.id) {
             history("/Home/existingTest", { state: { id: email } })
@@ -54,7 +56,8 @@ function AddQuestions() {
         })
         .then( res => {
             if (res.data == "no test"){
-                alert("Test not found")
+                history("/Home/existingTest", { state: { id: email } })
+                alert("The test was deleted")
             }
             else{
                 setContributors(res.data);
@@ -68,24 +71,25 @@ function AddQuestions() {
         accessKeyId: process.env.REACT_APP_ACCESS,
         secretAccessKey: process.env.REACT_APP_SECRET
     }
+
     const validFileTypes = ['image/jpg', 'image/jpeg', 'image/png'];
-    const uploadTos3 = e => {
+    
+    const fileType = e => {
         window.file = e.target.files[0];
         if (!validFileTypes.find(type => type === window.file.type)) {
             console.log(e);
             alert('File must be in jpg/jpeg/png format');
         }
     };
+
     const [qno, setQno] = useState('');
     const [question, setImage] = useState('');
     const [option, setOption] = useState('');
     const [newContributor, setContributor] = useState('');
-    async function upload(e) {
+    
+    async function uploadToS3(e) {
 
-        if(!qno || !question || !option){
-            alert("Enter the required details");
-            return false;
-        }
+        e.preventDefault();
 
         AWS.config.update({
             accessKeyId: config.accessKeyId,
@@ -100,6 +104,7 @@ function AddQuestions() {
             Key: window.file.name,
             Body: window.file,
         };
+
         var upload = s3
             .putObject(params)
             .on("httpUploadProgress", (e) => {
@@ -113,9 +118,18 @@ function AddQuestions() {
             console.log(err);
             alert("File uploaded successfully.");
         });
-        setImage("https://" + config.bucketName + ".s3." + config.region + ".amazonaws.com/" + window.file.name);
 
-        e.preventDefault();
+        setImage("https://" + config.bucketName + ".s3." + config.region + ".amazonaws.com/" + window.file.name);
+        await fupload();
+    }
+    
+    async function fupload() {
+
+        if(!qno || !question || !option){
+            alert("Enter the required details");
+            return false;
+        }
+
         try {
             await axios.post("http://localhost:8000/Home/addQuestions", {
                 test_name, qno, question, option
@@ -125,6 +139,7 @@ function AddQuestions() {
             console.log(e);
         }
     }
+
     async function del(qn) {
         try {
             await axios.post("http://localhost:8000/Home/addQuestions/delete", {
@@ -143,6 +158,7 @@ function AddQuestions() {
             console.log(e);
         }
     }
+
     async function deleteTest() {
         try {
             await axios.post("http://localhost:8000/Home/addQuestions/deleteTest", {
@@ -162,6 +178,7 @@ function AddQuestions() {
             console.log(e);
         }
     }
+
     async function addContributor(){
 
         if(!newContributor){
@@ -196,6 +213,50 @@ function AddQuestions() {
             console.log(e);
         }
     }
+
+    const [toDelete, setToDeleteContributor] = useState('');
+
+    async function deleteContributor(e) {
+
+        e.preventDefault();
+
+        if(!toDelete){
+            alert("Enter the email id of the contributor");
+            return false;
+        }
+
+        if (toDelete){
+            if (!/.+@gmail\.com/.test(toDelete)) {
+                alert("Enter valid email id");
+                return(false);
+            }
+        }
+
+        try{
+            await axios.post("http://localhost:8000/Home/addQuestions/deleteContributors", {
+                test_name, toDelete
+            })
+            .then(res => {
+                if (res.data == "removed") {
+                    window.location.reload();
+                }
+                else if (res.data == "no contributor") {
+                    alert("There is no contributor with that email id");
+                }
+                else {
+                    alert("There is no such test");
+                }
+            })
+            .catch(e => {
+                alert("There was some error deleting the contributor");
+                console.log(e);
+            })
+        }
+        catch(e) {
+            console.log(e);
+        }
+    }
+    
     return (
         <div className="addQuestions">
             <div className="title">
@@ -224,6 +285,19 @@ function AddQuestions() {
                             <div className = "add_contri">
                                 <br/>
                                 <input className = "contri_btn" type = "button" value = "submit" onClick = {addContributor}/>
+                            </div>
+                        </form>
+                </Popup>
+                <Popup className="del_contributor_popup" trigger={
+                    <input type="button" disabled={disabled} className="add_contributor" value="- Delete a contributor" />} modal nested>
+                        <form>
+                            <h1>Select to delete a contributor</h1>
+                            <div className = "field">
+                                <label className = "contri_label">Enter the email id of the contributor</label>
+                                <input className = "contri_input" type = "text" onChange = {(e) => (setToDeleteContributor(e.target.value))} placeholder = "Enter the email id" />
+                            </div>
+                            <div className = "add_contri">
+                                <input className = "contri_btn" type = "submit" onClick = {deleteContributor} />
                             </div>
                         </form>
                 </Popup>
@@ -265,7 +339,7 @@ function AddQuestions() {
                             <label>Question image:</label>
                         </div>
                         <div className="textbox">
-                            <input name="image" onChange={uploadTos3} type="file" required />
+                            <input name="image" onChange={fileType} type="file" required />
                         </div>
                     </div>
                     <div className="option">
@@ -280,12 +354,12 @@ function AddQuestions() {
                         </div>
                     </div>
                     <div className="submit_div">
-                        <input className="sub_btn" type="button" value="Submit" onClick={upload} />
+                        <input className="sub_btn" type="button" value="Submit" onClick={uploadToS3} />
                     </div>
                 </form>
             </Popup>
             <div>
-                <input type="button" className="delete_test_btn" onClick={(e) => deleteTest()} value="Delete test" />
+                <input type="button" disabled = {disabled} className="delete_test_btn" onClick={(e) => deleteTest()} value="Delete test" />
             </div>
         </div>
     )

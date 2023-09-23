@@ -12,6 +12,8 @@ function Signin() {
 
     async function authenticate(e){
 
+        e.preventDefault();
+
         if(!email || !password){
             alert("Enter the email id and password");
             return false;
@@ -63,7 +65,7 @@ function Signin() {
                         <label>Enter your password: </label><br/>
                         <input type="password" onChange = {(e) => setPasswd(e.target.value)} placeholder="Enter your password" />
                     </div>
-                    <input className="signin_btn" type="button" value="Log in" onClick={authenticate} />
+                    <input className="signin_btn" type="submit" value="Log in" onClick={authenticate} />
                     <p>OR</p>
                     <Link to = "/Signup">Click to signup</Link>
                 </form>

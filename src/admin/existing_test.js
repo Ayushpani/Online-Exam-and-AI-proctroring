@@ -56,12 +56,12 @@ function Existing_test() {
                 <input type="button" onClick={handleLogout} className="nav_btn" value="Log out" />
             </div>
             <br />
+            <button className="pre-btn" onClick={btnpressprev}><p>&lt;</p></button>
+            <button className="nxt-btn" onClick={btnpressnext}><p>&gt;</p></button>
             <div className="container">
                 {data.map(i => {
                     return (
                         <div>
-                            <button className="pre-btn" onClick={btnpressprev}><p>&lt;</p></button>
-                            <button className="nxt-btn" onClick={btnpressnext}><p>&gt;</p></button>
                             <div className="tests" onClick={addQuestions(i.test_name)}>
                                 <div id="test_name">{i.test_name}</div>
                                 <div id="test_author">Test author: {i.test_author}</div>

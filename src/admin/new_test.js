@@ -8,11 +8,11 @@ function New_test(){
 
     const [test_name, setTestname] = useState('');
     const [test_author, setAuthor] = useState('');
-    const [no_of_questions, setNumber] = useState('');
     const [author_email, setEmail] = useState('');
 
     const history = useNavigate();
     const location = useLocation();
+    const email = location.state.id;
     if(!location.state){
         alert("Please login");
         history("/Login");
@@ -27,13 +27,13 @@ function New_test(){
     async function submit(e){
         e.preventDefault();
 
-        if(!test_author || !test_name || !no_of_questions || !author_email){
+        if(!test_author || !test_name || !author_email){
             alert("Enter all the required details");
             return false;
         }
 
-        if (test_author && test_name && no_of_questions && author_email){
-            if (!/.+@gmail\.com/.test(author_email)) {
+        if (test_author && test_name && author_email){
+            if (!/.+@gmail\.com/.test(author_email) || email != author_email) {
                 alert("Enter valid email id");
                 return(false);
             }
@@ -41,7 +41,7 @@ function New_test(){
 
         try{
             await axios.post("http://localhost:8000/Home/newTest", {
-                test_name, test_author, author_email, no_of_questions
+                test_name, test_author, author_email
             })
             .then(res => {
                 if(res.data == "exist"){
@@ -51,7 +51,7 @@ function New_test(){
                     alert("Wrong username")
                 }
                 else{
-                    history("/Home/addQuestions", { state: { id: test_name}})
+                    history("/Home/addQuestions", { state: { id: test_name, email_id: email}})
                 }
             })
         }
@@ -89,12 +89,6 @@ function New_test(){
                         <td>Author email id:</td>
                         <td>
                             <input className = "text_box" type = "text" onChange = {(e) => { setEmail(e.target.value) } } placeholder = "Author email id"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>What is the maximum number of questions:</td>
-                        <td>
-                            <input className = "text_box" type = "number" onChange = {(e) => { setNumber(e.target.value) } } placeholder = "No. of questions"/>
                         </td>
                     </tr>
                     <tr>

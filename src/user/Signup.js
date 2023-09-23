@@ -14,6 +14,8 @@ function Signup() {
 
     async function createUser(e){
 
+        e.preventDefault();
+
         if(!name || !email || !dob || !password){
             alert("Enter the email id and password");
             return false;
@@ -70,7 +72,7 @@ function Signup() {
                         <label>Create a password for your account: </label><br/>
                         <input type="password" onChange = {(e) => setPasswd(e.target.value)} placeholder="Enter your password" />
                     </div>
-                    <input className="create_btn" type="button" value="Create account" onClick={createUser} />
+                    <input className="create_btn" type="submit" value="Create account" onClick={createUser} />
                     <p>OR</p>
                     <div className = "signin_link">
                         <Link to = "/Signin">Click to signin</Link>

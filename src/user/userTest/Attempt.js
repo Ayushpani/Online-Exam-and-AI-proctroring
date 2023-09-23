@@ -25,9 +25,9 @@ const Attempt = () => {
     })
   }, [])
 
-  const onFrameButtonClick = useCallback(() => {
-    navigate("/test/terms", { state: { id: email }});
-  }, [navigate]);
+  const onFrameButtonClick = (test_name) => () => {
+    navigate("/test/terms", { state: { id: email, test_name: test_name }});
+  };
 
   const onFrameButton1Click = useCallback(() => {
     navigate("/");
@@ -104,7 +104,7 @@ const Attempt = () => {
               property1DefaultLeft="75.26px"
               property1DefaultJustifyContent="center"
               attemptDisplay="inline-block"
-              onFrameButton5Click={onFrameButtonClick}
+              onFrameButton5Click={onFrameButtonClick(i.test_name)}
             />
           </div>
             )
