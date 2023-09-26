@@ -18,7 +18,7 @@ function Check() {
         const abortController = new AbortController();
 
         const loadWebcam = async () => {
-            axios.post('http://localhost:8000/test/check',{ signal: abortController.signal })
+            axios.post('http://localhost:8000/test/check', { signal: abortController.signal })
                 .then(res => {
                     if (res.data == "executed") {
                         console.log("pyScript execution successful");
@@ -81,12 +81,21 @@ function Check() {
 
     const startTest = async () => {
 
-        const res = await axios.post('http://localhost:8000/test/kill')
-        if (res.data == "killed") {
-            history("/test/startTest", { state: { id: email, test_name: test_name } })
+        const capture = document.getElementById('captured_image');
+
+        if (capture.src) {
+
+            const res = await axios.post('http://localhost:8000/test/kill')
+            if (res.data == "killed") {
+                history("/test/startTest", { state: { id: email, test_name: test_name } })
+            }
+            else if (res.data == "error") {
+                alert("The snake is alive");
+            }
         }
-        else if (res.data == "error") {
-            alert("The snake is alive");
+        else{
+            alert("Please take a picture first");
+            return false;
         }
     }
 

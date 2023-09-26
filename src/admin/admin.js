@@ -77,7 +77,7 @@ function Admin() {
                     <hr/>
                 </div>
                 <input type = "button" value = "Logout" onClick = {handleLogout}/>
-                <table border="1" width="50%" cellspacing="0">
+                <table className = "table" border="1" width="50%" cellspacing="0">
                     <tr>
                         <th>Username</th>
                         <th>Email ID</th>

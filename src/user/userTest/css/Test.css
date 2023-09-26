@@ -1,0 +1,161 @@
+.header{
+    background-color: azure;
+    display: flex;
+    flex-direction: row;
+}
+
+.candidate_details_div{
+    height: 100px
+}
+
+.user_image_div{
+    margin: 10px;
+}
+
+.details_table{
+    margin: 10px;
+    border-style: none;
+    width: fit-content;
+}
+
+.cell{
+    height: fit-content;
+}
+
+.question_div{
+    float: left;
+    margin-left: 20px;
+    height: fit-content;
+    overflow: hidden;
+}
+
+.question_header_div{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.question_option_div{
+    margin-bottom: 30px;
+}
+
+.question_option_table{
+    width: 600px;
+}
+
+.question_option_row{
+    display: flex;
+    flex-direction: row;
+}
+
+.option{
+    width: 150px;
+    display: flex;
+    flex-direction: row;
+    font-size: 30px;
+}
+
+.question_buttons{
+    cursor: pointer;
+    font-weight: bolder;
+    font-size: large;
+    border-radius: 5px;
+    width: max-content;
+    height: 40px;
+}
+
+.save{
+    width: 200px;
+    background-color: lightgreen;
+    border-color: lightgreen;
+}
+
+.save_and_mfr{
+    width: 290px;
+    background-color: rgb(255, 221, 0);
+    border-color: rgb(255, 221, 0);
+}
+
+.mfr{
+    width: 200px;
+    background-color: skyblue;
+    border-color: skyblue;
+}
+
+.clear{
+    width: 100px;
+    border-color: lightgrey;
+}
+
+.submit_button_div{
+    margin: 30px;
+    flex-direction: column;
+}
+
+.submit_button{
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bolder;
+    font-size: larger;
+    width: 120px;
+    height: 40px;
+    background-color: lightgreen;
+    border-color: lightgreen;
+}
+
+.question_panel_div{
+    float: right;
+    margin-right: 20px;
+}
+
+.question_panel_instruction_table{
+    border: 3px dotted grey;
+    width: 400px;
+}
+
+.qp_ins_logo_cell{
+    width: 50px;
+    height: 60px;
+    text-align: center;
+}
+
+.question_panel_tab{
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+}
+
+.question_panel_tab a{
+    font-size: 25px;
+}
+
+.summary_div{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.summary_header{
+    text-align: center;
+}
+
+.summary_table_header{
+    height:fit-content;
+}
+
+.question_for_next_step{
+    font-weight: bolder;
+    font-size: larger;
+}
+
+.next_step_buttons{
+    flex-direction: row;
+}
+
+.next_button{
+    font-weight: bold;
+    font-size: large;
+    height: 40px;
+    width: 100px;
+}

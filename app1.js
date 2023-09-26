@@ -52,6 +52,23 @@ app.post('/test/kill', async (req, res) => {
     });
 });
 
+app.post("/test/fetchQuestions", async(req, res) => {
+    const {test_name} = req.body;
+
+    try{
+        const question_data = await questions.find({ test_name: test_name });
+        if (question_data){
+            res.json(question_data)
+        }
+        else{
+            res.json("no question")
+        }
+    }
+    catch (e){
+        console.log(e);
+    }
+})
+
 app.post("/adminLogin", async (req, res) => {
     const { email, password } = req.body;
 
