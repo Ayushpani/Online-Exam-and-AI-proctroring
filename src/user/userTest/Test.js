@@ -20,12 +20,12 @@ function Test() {
     const [totalSeconds, setTotalSeconds] = useState(10 * 60);
     const [questions, setQuestions] = useState([]);
     const [activeQn, setActiveQn] = useState(0);
-    const [selectedOptions, setSelectedOptions] = useState(Array(questions.length).fill(''));
-    const [answered, setAnswered] = useState(0);
-    const [MFRed, setMFRed] = useState(0);
-    const [ansMFRed, setAnsMFRed] = useState(0);
-    const [notAnsed, setNotAnsed] = useState(0);
-    const [visited, setVisited] = useState(0);
+    const [selectedOptions, setSelectedOptions] = useState([]);
+    const [answered, setAnswered] = useState([]);
+    const [notAnsed, setNotAnsed] = useState([]);
+    const [MFRed, setMFRed] = useState([]);
+    const [ansMFRed, setAnsMFRed] = useState([]);
+    const [visited, setVisited] = useState([]);
     const [tabImage, setTabImage] = useState([]);
     const [reload, setReload] = useState(0);
 
@@ -68,6 +68,12 @@ function Test() {
                 }
                 else {
                     setQuestions(res.data);
+                    setSelectedOptions(Array(res.data.length).fill(''));
+                    setAnswered(Array(res.data.length).fill(0));
+                    setNotAnsed(Array(res.data.length).fill(0));
+                    setAnsMFRed(Array(res.data.length).fill(0));
+                    setMFRed(Array(res.data.length).fill(0));
+                    setVisited(Array(res.data.length).fill(0));
                     setTabImage(Array(res.data.length).fill(notVis));
                 }
             })
@@ -93,33 +99,67 @@ function Test() {
         };
     }, []);
 
+    const updateAnswered = (index, value) => {
+        const updatedAnswered = [...answered];
+        updatedAnswered[index] = value;
+        setAnswered(updatedAnswered);
+    };
+
+    const updateNotAnsed = (index, value) => {
+        const updatedNotAnsed = [...notAnsed];
+        updatedNotAnsed[index] = value;
+        setNotAnsed(updatedNotAnsed);
+    }
+
+    const updateMFR = (index, value) => {
+        const updatedMFRed = [...MFRed];
+        updatedMFRed[index] = value;
+        setMFRed(updatedMFRed);
+    };
+
+    const updateAnsMFR = (index, value) => {
+        const updatedAnsMFRed = [...ansMFRed];
+        updatedAnsMFRed[index] = value;
+        setAnsMFRed(updatedAnsMFRed);
+    };
+
+    const updateVisited = (index, value) => {
+        const updatedVisited = [...visited];
+        updatedVisited[index] = value;
+        setVisited(updatedVisited);
+    };
+
+    const updateTabImage = (index, image) => {
+        const updatedTabImage = [...tabImage];
+        updatedTabImage[index] = image;
+        setTabImage(updatedTabImage);
+    };
+
     const handleTabClick = (index) => {
         const changeImage = document.getElementById(activeQn);
-        if (changeImage.src == MFR || changeImage.src == ansMFR || changeImage.src == ans) {
+        if (MFRed[activeQn] == 1 || ansMFRed[activeQn] == 1 || answered[activeQn] == 1) {
 
         }
-        else if (typeof selectedOptions[activeQn] === 'undefined') {
-            const updatedNotAnsed = notAnsed + 1;
-            setNotAnsed(updatedNotAnsed);
-            const updatedVisited = visited + 1;
-            setVisited(updatedVisited);
+        else if (selectedOptions[activeQn] === '') {
+            {/* Updating the visited array */}
+            updateVisited(activeQn, 1);
+
+            {/* Updating the not answered array */}
+            updateNotAnsed(activeQn, 1);
             
             {/* Code to update the array of tab images */}
-            const updatedTabImage = [...tabImage];
-            updatedTabImage[activeQn] = notAns;
-            setTabImage(updatedTabImage);
+            updateTabImage(activeQn, notAns)
             changeImage.src = notAns;
         }
         else {
-            const updatedAnswered = answered + 1;
-            setAnswered(updatedAnswered);
-            const updatedVisited = visited + 1;
-            setVisited(updatedVisited);
+            {/* Updating the answered array */}
+            updateAnswered(activeQn, 1)
 
-            {/* Code to update the array of tab images */}
-            const updatedTabImage = [...tabImage];
-            updatedTabImage[activeQn] = ans;
-            setTabImage(updatedTabImage);
+            {/* Updating the visited  array */}
+            updateVisited(activeQn, 1)
+            
+            {/* Updating the array of tab images */}
+            updateTabImage(activeQn, ans)
             changeImage.src = ans;
         }
         setActiveQn(index);
@@ -133,13 +173,14 @@ function Test() {
     }
 
     const handleSave = () => {
-        if (typeof selectedOptions[activeQn] === 'undefined') {
+        if (selectedOptions[activeQn] === '') {
             alert("Please select an option first")
             return false;
         }
+
         const changeImage = document.getElementById(activeQn);
-        var ifVisited = 0;
-        if (changeImage.src == ans) {
+
+        if (answered[activeQn] == 1) {
             const updatedActiveQn = activeQn + 1;
             if ((updatedActiveQn + 1) > questions.length) {
                 alert("No more questions please submit");
@@ -148,33 +189,24 @@ function Test() {
             setActiveQn(updatedActiveQn);
             return;
         }
-        if (changeImage.src == MFR){
-            const updatedMFRed = MFRed - 1;
-            setMFRed(updatedMFRed);
-            ifVisited = 1;
+        else if (MFRed[activeQn] == 1){
+            updateMFR(activeQn, 0);
         }
-        if (changeImage.src == ansMFR) {
-            const updatedAnsMFRed = ansMFRed - 1;
-            setAnsMFRed(updatedAnsMFRed);
-            ifVisited = 1;
+        else if (ansMFRed[activeQn] == 1) {
+            updateAnsMFR(activeQn, 0);
         }
-        if (changeImage.src == notAns) {
-            const updatedNotAnsed = notAnsed - 1;
-            setNotAnsed(updatedNotAnsed);
-            ifVisited = 1;
+        else if (notAnsed[activeQn] == 1) {
+            updateNotAnsed(activeQn, 0);
         }
+
+        updateAnswered(activeQn, 1);
 
         {/* Code to update the array of tab images */}
-        const updatedTabImage = [...tabImage];
-        updatedTabImage[activeQn] = ans;
-        setTabImage(updatedTabImage);
+        updateTabImage(activeQn, ans)
         changeImage.src = ans;
 
-        const updatedAnswered = answered + 1;
-        setAnswered(updatedAnswered);
-        if (!ifVisited){
-            const updatedVisited = visited + 1;
-            setVisited(updatedVisited);
+        if (visited[activeQn] == 0){
+            updateVisited(activeQn, 1);
         }
         const updatedActiveQn = activeQn + 1;
         if ((updatedActiveQn + 1) > questions.length) {
@@ -186,8 +218,11 @@ function Test() {
 
     const handleMFR = () => {
         const changeImage = document.getElementById(activeQn);
-        var ifVisited = 0;
-        if (changeImage.src == MFR) {
+
+        if (answered[activeQn] == 1) {
+            updateAnswered(activeQn, 0);
+        }
+        else if (MFRed[activeQn] == 1){
             const updatedActiveQn = activeQn + 1;
             if ((updatedActiveQn + 1) > questions.length) {
                 alert("No more questions please submit");
@@ -196,33 +231,21 @@ function Test() {
             setActiveQn(updatedActiveQn);
             return;
         }
-        if (changeImage.src == ans){
-            const updatedAnswered = answered - 1;
-            setAnswered(updatedAnswered);
-            ifVisited = 1;
+        else if (ansMFRed[activeQn] == 1) {
+            updateAnsMFR(activeQn, 0);
         }
-        if (changeImage.src == ansMFR) {
-            const updatedAnsMFRed = ansMFRed - 1;
-            setAnsMFRed(updatedAnsMFRed);
-            ifVisited = 1;
+        else if (notAnsed[activeQn] == 1) {
+            updateNotAnsed(activeQn, 0);
         }
-        if (changeImage.src == notAns) {
-            const updatedNotAnsed = notAnsed - 1;
-            setNotAnsed(updatedNotAnsed);
-            ifVisited = 1;
-        }
+
+        updateMFR(activeQn, 1);
 
         {/* Code to update the array of tab images */}
-        const updatedTabImage = [...tabImage];
-        updatedTabImage[activeQn] = MFR;
-        setTabImage(updatedTabImage);
+        updateTabImage(activeQn, MFR)
         changeImage.src = MFR;
 
-        const updatedMFRed = MFRed + 1;
-        setMFRed(updatedMFRed);
-        if (!ifVisited) {
-            const updatedVisited = visited + 1;
-            setVisited(updatedVisited);
+        if (visited[activeQn] == 0){
+            updateVisited(activeQn, 1);
         }
         const updatedActiveQn = activeQn + 1;
         if ((updatedActiveQn + 1) > questions.length) {
@@ -233,13 +256,20 @@ function Test() {
     }
 
     const handleSaveAndMFR = () => {
-        if (typeof selectedOptions[activeQn] === 'undefined') {
+        if (selectedOptions[activeQn] === '') {
             alert("Please select an option first")
             return false;
         }
+
         const changeImage = document.getElementById(activeQn);
-        var ifVisited = 0;
-        if (changeImage.src == ansMFR) {
+
+        if (answered[activeQn] == 1) {
+            updateAnswered(activeQn, 0);
+        }
+        else if (MFRed[activeQn] == 1){
+            updateMFR(activeQn, 0);
+        }
+        else if (ansMFRed[activeQn] == 1) {
             const updatedActiveQn = activeQn + 1;
             if ((updatedActiveQn + 1) > questions.length) {
                 alert("No more questions please submit");
@@ -248,33 +278,18 @@ function Test() {
             setActiveQn(updatedActiveQn);
             return;
         }
-        if (changeImage.src == MFR){
-            const updatedMFRed = MFRed - 1;
-            setMFRed(updatedMFRed);
-            ifVisited = 1;
+        else if (notAnsed[activeQn] == 1) {
+            updateNotAnsed(activeQn, 0);
         }
-        if (changeImage.src == ans){
-            const updatedAnswered = answered - 1;
-            setAnswered(updatedAnswered);
-            ifVisited = 1;
-        }
-        if (changeImage.src == notAns) {
-            const updatedNotAnsed = notAnsed - 1;
-            setNotAnsed(updatedNotAnsed);
-            ifVisited = 1;
-        }
+
+        updateAnsMFR(activeQn, 1);
 
         {/* Code to update the array of tab images */}
-        const updatedTabImage = [...tabImage];
-        updatedTabImage[activeQn] = ansMFR;
-        setTabImage(updatedTabImage);
+        updateTabImage(activeQn, ansMFR)
         changeImage.src = ansMFR;
 
-        const updatedAnsMFRed = ansMFRed + 1;
-        setAnsMFRed(updatedAnsMFRed);
-        if (!ifVisited) {
-            const updatedVisited = visited + 1;
-            setVisited(updatedVisited);
+        if (visited[activeQn] == 0){
+            updateVisited(activeQn, 1);
         }
         const updatedActiveQn = activeQn + 1;
         if ((updatedActiveQn + 1) > questions.length) {
@@ -285,19 +300,31 @@ function Test() {
     }
 
     const handleClear = () => {
-        if (typeof selectedOptions[activeQn] === 'undefined') {
+        if (selectedOptions[activeQn] === '') {
             alert("Please select an option first")
             return false;
         }
-        const changeImage = document.getElementById(activeQn)
+        const changeImage = document.getElementById(activeQn);
+
+        if (ansMFRed[activeQn] == 1) {
+            updateAnsMFR(activeQn, 0);
+        }
+        if (MFRed[activeQn] == 1){
+            updateMFR(activeQn, 0);
+        }
+        if (answered[activeQn] == 1){
+            updateAnswered(activeQn, 0);
+        }
+
+        updateNotAnsed(activeQn, 1);
+
+        {/* Updating the options array */}
         const updatedSelectedOptions = [...selectedOptions];
         updatedSelectedOptions[activeQn] = '';
         setSelectedOptions(updatedSelectedOptions);
 
         {/* Code to update the array of tab images */}
-        const updatedTabImage = [...tabImage];
-        updatedTabImage[activeQn] = notAns;
-        setTabImage(updatedTabImage);
+        updateTabImage(activeQn, notAns);
         changeImage.src = notAns;
     };
 
@@ -432,11 +459,11 @@ function Test() {
                         </tr>
                         <tr>
                             <td>{questions.length}</td>
-                            <td>{answered}</td>
-                            <td>{notAnsed}</td>
-                            <td>{MFRed}</td>
-                            <td>{ansMFRed}</td>
-                            <td>{questions.length - visited}</td>
+                            <td>{answered.reduce((accumulator, currentValue) => accumulator + currentValue, 0)}</td>
+                            <td>{notAnsed.reduce((accumulator, currentValue) => accumulator + currentValue, 0)}</td>
+                            <td>{MFRed.reduce((accumulator, currentValue) => accumulator + currentValue, 0)}</td>
+                            <td>{ansMFRed.reduce((accumulator, currentValue) => accumulator + currentValue, 0)}</td>
+                            <td>{questions.length - visited.reduce((accumulator, currentValue) => accumulator + currentValue, 0)}</td>
                         </tr>
                     </table>
                     <br/>
@@ -449,6 +476,11 @@ function Test() {
                             <button className = "next_button no" onClick = {handleNo}>No</button>
                         </div>
                     </div>
+                    {selectedOptions.map((i, index) => {
+                        return(
+                            <p>Question {index + 1}: selected option is {i}</p>
+                        )
+                    })}
                 </div>
             )}
         </div>
