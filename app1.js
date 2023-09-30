@@ -1,5 +1,6 @@
 const express = require("express");
 const { exec } = require('child_process');
+const bodyParser = require('body-parser');
 const treeKill = require('tree-kill');
 const { adminDetail, collection, test_data, questions, user_details } = require("./mongo")
 const cors = require("cors");
@@ -12,9 +13,10 @@ app.get("/", cors(), (req, res) => {
 
 })
 
-let process = null;
+let proctor_data = null;
+
 app.post('/test/check', async (req, res) => {
-    process = exec('python pyScripts/first.py', (error, stdout, stderr) => {
+    exec('python pyScripts/first.py', (error, stdout, stderr) => {
         if (error) {
             console.log(error);
             res.json("error");
@@ -67,6 +69,29 @@ app.post("/test/fetchQuestions", async(req, res) => {
     catch (e){
         console.log(e);
     }
+})
+
+app.post("/test/proctor", async(req, res) => {
+    const detectedObjects = req.body;
+    proctor_data = detectedObjects;
+    res.status(200).json({message: 'Object detection data received'});
+});
+
+app.post("/test/proctor_data", async(req, res) => {
+    res.json(proctor_data);
+    proctor_data = null;
+})
+
+app.post("/test/proctoring", async(req, res) => {
+    exec('python pyScripts/headless.py', (error, stdout, stderr) => {
+        if (error) {
+            console.log(error);
+            res.json("error");
+        }
+        else {
+            res.json("executed");
+        }
+    });
 })
 
 app.post("/adminLogin", async (req, res) => {

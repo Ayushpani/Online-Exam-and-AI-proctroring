@@ -15,25 +15,28 @@ function Check() {
 
     useEffect(() => {
 
-        const abortController = new AbortController();
-
-        const loadWebcam = async () => {
-            axios.post('http://localhost:8000/test/check', { signal: abortController.signal })
-                .then(res => {
-                    if (res.data == "executed") {
-                        console.log("pyScript execution successful");
-                    }
-                    else {
-                        alert("There was some error executing the pyScript");
-                    }
-                })
+        const loadWebcam = () => {
+            try{
+                axios.post('http://localhost:8000/test/check')
+                    .then(res => {
+                        if (res.data == "executed") {
+                            console.log("pyScript execution successful");
+                        }
+                        else {
+                            console.log("Failed to load webcam");
+                        }
+                    })
+                    .catch(e => {
+                        console.log(e);
+                    });
+            }
+            catch(e){
+                console.log(e);
+            }
         };
 
         loadWebcam();
 
-        return () => {
-            abortController.abort();
-        };
     }, []);
 
     const config = {

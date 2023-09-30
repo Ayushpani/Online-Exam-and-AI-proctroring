@@ -99,6 +99,51 @@ function Test() {
         };
     }, []);
 
+    useEffect(() => {
+        try{
+            axios.post("http://localhost:8000/test/proctoring")
+            .then(res => {
+                if (res.data == "error"){
+                    alert("There was some error executing the proctoring script");
+                }
+                else{
+                    console.log("headless.py executed successfully");
+                }
+            })
+            .catch(e => {
+                console.log(e);
+            })
+        }
+        catch(e){
+            console.log(e);
+        }
+    }, []);
+    
+    useEffect(() => {
+        const proctor = setInterval(() => {
+            axios.post("http://localhost:8000/test/proctor_data")
+            .then(res => {
+                if (res.data != null){
+                    if (res.data["phone_status"] == 1){
+                        alert('Mobile phone detected');
+                    }
+                    if (res.data["people_count"] == 0){
+                        alert('No person detected');
+                    }
+                    if (res.data["people_count"] == 2){
+                        alert('More than one person detected');
+                    }
+                    else{
+                        console.log(res.data);
+                    }
+                }
+            })
+            .catch(e => {
+                console.log(e);
+            })
+        }, 1000)
+    });
+
     const updateAnswered = (index, value) => {
         const updatedAnswered = [...answered];
         updatedAnswered[index] = value;
@@ -476,11 +521,6 @@ function Test() {
                             <button className = "next_button no" onClick = {handleNo}>No</button>
                         </div>
                     </div>
-                    {selectedOptions.map((i, index) => {
-                        return(
-                            <p>Question {index + 1}: selected option is {i}</p>
-                        )
-                    })}
                 </div>
             )}
         </div>

@@ -3,18 +3,10 @@ import cv2
 
 class ObjectDetection(object):
     
-    def __init__(self):
-        self.model = self.load_model()
+    def __init__(self, model):
+        self.model = model
         self.classes = self.model.names
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    
-    def load_model(self):
-        '''
-        Loads Yolo5 model from pytorch hub
-        :return: Trained Pytorch model
-        '''
-        model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained = True)
-        return model
     
     def score_frame(self, frame):
         '''
@@ -44,13 +36,19 @@ class ObjectDetection(object):
         '''
         labels, cord = results
         n = len(labels)
+        phone_status = 0
+        people_count = 0
         x_shape, y_shape = frame.shape[1], frame.shape[0]
         for i in range(n):
             row = cord[i]
             if row[4] >= 0.2:
                 x1, y1, x2, y2 = int(row[0] * x_shape), int(row[1] * y_shape), int(row[2] * x_shape), int(row[3] * y_shape)
                 bgr = (0, 255, 0)
+                if self.classes[int(labels[i])] == "person":
+                    people_count += 1
+                if self.classes[int(labels[i])] == "cell phone":
+                    phone_status = 1
                 cv2. rectangle(frame, (x1, y1), (x2, y2), bgr, 2)
                 cv2.putText(frame, self.class_to_label(labels[i]), (x1, y1), cv2.FONT_HERSHEY_SIMPLEX, 0.9, bgr, 2)
         
-        return frame
+        return frame, phone_status, people_count
