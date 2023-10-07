@@ -1,5 +1,6 @@
 #nav{
-    background-color: rgb(131, 127, 127);
+    background-color: #031B34;
+    
     border-bottom-width: 2px;
     border-bottom-style: solid;
     border-bottom-color: black;
@@ -40,6 +41,13 @@
     cursor: pointer;
     background-color: #6789ba;
 }
+
+#after_nav {
+    background: linear-gradient(89.97deg, #1b1ba0 1.84%, #36a9cd 102.67%);;
+    height: 620px;
+    background-image: url('../../images/container3.jpg');
+}
+
 .test_button{
     margin: 10px;
     font-size: 20px;
@@ -76,4 +84,18 @@ hr{
 #after_nav{
     display: flex;
     flex-direction: row;
+}
+.hello{
+    color: #ffff;
+}
+
+.content{
+    color: #afe2f3;
+}
+
+.welcomeContainer{
+    border-radius: 50px;
+    background-color: #678aba53;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }

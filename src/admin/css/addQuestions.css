@@ -103,3 +103,8 @@
 .contri_btn:hover{
     background-color: lightgreen;
 }
+
+.question_information_table{
+    text-align: center;
+    font-size: 25px;
+}

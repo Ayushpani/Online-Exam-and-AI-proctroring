@@ -291,7 +291,7 @@ function AddQuestions() {
                 <Popup className="del_contributor_popup" trigger={
                     <input type="button" disabled={disabled} className="add_contributor" value="- Delete a contributor" />} modal nested>
                         <form>
-                            <h1>Select to delete a contributor</h1>
+                            <h1 className = "add_questions_heading">Select to delete a contributor</h1>
                             <div className = "field">
                                 <label className = "contri_label">Enter the email id of the contributor</label>
                                 <input className = "contri_input" type = "text" onChange = {(e) => (setToDeleteContributor(e.target.value))} placeholder = "Enter the email id" />
@@ -301,7 +301,7 @@ function AddQuestions() {
                             </div>
                         </form>
                 </Popup>
-                <table width="100%" border="1" cellspacing="0">
+                <table width="100%" border="1" cellspacing="0" className = "question_information_table">
                     <tr>
                         <th>Qn. no.</th>
                         <th>Question</th>

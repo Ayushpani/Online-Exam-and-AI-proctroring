@@ -54,16 +54,17 @@ function Login() {
     return (
         <center>
             <div className="Login">
-
-                <form action="POST">
-                    <h1>Teacher login</h1>
-                    <input type="email" onChange={(e) => { setEmail(e.target.value) }} placeholder="Email" name="" id="email" />
-                    <br/>
-                    <input type="password" onChange={(e) => { setPassword(e.target.value) }} placeholder="Password" name="" id="password" />
-                    <br/>
-                    <input type="submit" onClick = {submit} id = "submit"/>
-                    <br />
-                </form>
+                <div className="container1">
+                    <form action="POST">
+                        <h1 className = "login_heading"> TEACHER LOGIN</h1>
+                        <input type="email" onChange={(e) => { setEmail(e.target.value) }} placeholder="Email" name="" id="email" />
+                        <br/>
+                        <input type="password" onChange={(e) => { setPassword(e.target.value) }} placeholder="Password" name="" id="password" />
+                        <br/>
+                        <input type="submit" onClick = {submit} id = "submit"/>
+                        <br />
+                    </form>
+                </div>
             </div>
         </center>
     )

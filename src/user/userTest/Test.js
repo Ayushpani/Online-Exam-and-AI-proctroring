@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import notVis from './imagesProj/notVis.png'
 import notAns from './imagesProj/notAns.png'
@@ -28,6 +28,8 @@ function Test() {
     const [visited, setVisited] = useState([]);
     const [tabImage, setTabImage] = useState([]);
     const [reload, setReload] = useState(0);
+
+    const history = useNavigate();
 
     const config = {
         bucketName: process.env.REACT_APP_BUCKET_NAME,
@@ -99,7 +101,7 @@ function Test() {
         };
     }, []);
 
-    useEffect(() => {
+    {/*useEffect(() => {
         try{
             axios.post("http://localhost:8000/test/proctoring")
             .then(res => {
@@ -142,7 +144,7 @@ function Test() {
                 console.log(e);
             })
         }, 1000)
-    });
+    });*/}
 
     const updateAnswered = (index, value) => {
         const updatedAnswered = [...answered];
@@ -378,6 +380,16 @@ function Test() {
         setShowSummary(true);
     };
 
+    const handleYes = () => {
+        axios.post("http://localhost:8000/test/kill")
+        .then(res => {
+            history("/test");
+        })
+        .catch(e => {
+            console.log(e);
+        })
+    }
+
     const handleNo = () => {
         setShowSummary(false);
         setShowTest(true);
@@ -517,7 +529,7 @@ function Test() {
                         No changes will be allowed after submission.</p>
                         <br/>
                         <div className = "next_step_buttons">
-                            <button className = "next_button yes" >Yes</button>&nbsp;&nbsp;
+                            <button className = "next_button yes" onClick = {handleYes} >Yes</button>&nbsp;&nbsp;
                             <button className = "next_button no" onClick = {handleNo}>No</button>
                         </div>
                     </div>

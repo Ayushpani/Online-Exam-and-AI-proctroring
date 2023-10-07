@@ -6,18 +6,33 @@
     width: 100%;
     height: 100vh;
     position: absolute;
-    background-image: url("../../images/app_bg.jpeg");
+    background-image: url("../../images/container2.jpg");
     background-repeat: no-repeat;
     background-size:cover;
 }
+
+.container3{
+    background-color: rgba(85, 85, 88, 0.479);
+    height: 600px;
+    border-radius: 50px;
+    padding-top: 15px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 15px;
+}
+
 .name_field{
     text-align: center;
     margin: 10px;
     font-size: 20px;
     font-style: solid;
     font-weight: bolder;
-    -webkit-text-fill-color: navy;
 }
+
+.name_field label{
+    -webkit-text-fill-color: rgb(214, 211, 211);
+}
+
 .name_field input{
     margin: 10px;
     text-align: center;
@@ -32,8 +47,12 @@
     font-size: 20px;
     font-style: solid;
     font-weight: bolder;
-    -webkit-text-fill-color: navy;
 }
+
+.email_id_field label{
+    -webkit-text-fill-color: rgb(208, 208, 235);
+}
+
 .email_id_field input{
     margin: 10px;
     text-align: center;
@@ -48,8 +67,12 @@
     font-size: 20px;
     font-style: solid;
     font-weight: bolder;
-    -webkit-text-fill-color: navy;
 }
+
+.DOB label {
+    -webkit-text-fill-color: rgb(214, 211, 211);
+}
+
 .DOB input{
     margin: 10px;
     text-align: center;
@@ -64,8 +87,12 @@
     font-size: 20px;
     font-style: solid;
     font-weight: bolder;
-    -webkit-text-fill-color: navy;
 }
+
+.passwd label {
+    -webkit-text-fill-color: rgb(214, 211, 211)y;
+}
+
 .passwd input{
     margin: 10px;
     text-align: center;
@@ -76,12 +103,12 @@
 }
 .heading_signup{
     margin: 10px;
-    color: black;
+    color: rgb(146, 235, 255);
 }
 .create_btn{
     height: 40px;
     width: 160px;
     border-radius: 10px;
     font-size: 20px;
-    background-color: lightgreen;
+    background-color: rgb(70, 233, 251);
 }

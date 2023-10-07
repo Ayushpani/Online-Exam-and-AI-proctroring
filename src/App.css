@@ -3,9 +3,21 @@
 	justify-content: center;
 	align-items: center;
 	height: 100vh;
-	background-image: url("./images/app_bg.jpeg");
 	background-size: cover;
+	background-image: url("images/container.webp");
+	background-repeat: no-repeat;
 }
+
+.container{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+    background-color: rgba(217, 217, 209, 0.24);
+	height: 200px;
+	width: 550px;
+	border-radius: 40px;
+}
+
 .link{
 	text-decoration: none;
 }
@@ -18,7 +30,8 @@
 	border-radius: 50px;
 	border-color: white;
 	cursor: pointer;
-	background-color: rgb(219, 236, 108);
+	border-color: rgb(244, 246, 248);
+	background-color: rgb(27, 96, 185);
 }
 .login_btn:hover{
 	text-align: center;

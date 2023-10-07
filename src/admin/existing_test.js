@@ -34,7 +34,7 @@ function Existing_test() {
     const addQuestions = (test_name) => () => {
         history("/Home/addQuestions", { state: { id: test_name, email_id: email } });
     }
-    let box = document.querySelector('.container');
+    let box = document.querySelector('.test_container');
     const btnpressprev = () => {
         let width = box.clientWidth;
         box.scrollLeft = box.scrollLeft - width;
@@ -55,21 +55,20 @@ function Existing_test() {
                 <input type="button" onClick={home} className="nav_btn" value="Home" />
                 <input type="button" onClick={handleLogout} className="nav_btn" value="Log out" />
             </div>
-            <br />
-            <button className="pre-btn" onClick={btnpressprev}><p>&lt;</p></button>
-            <button className="nxt-btn" onClick={btnpressnext}><p>&gt;</p></button>
-            <div className="container">
-                {data.map(i => {
-                    return (
-                        <div>
+            <div id="after_nav">
+                <button className="pre-btn" onClick={btnpressprev}><p>&lt;</p></button>
+                <button className="nxt-btn" onClick={btnpressnext}><p>&gt;</p></button>
+                <div className="test_container">
+                    {data.map(i => {
+                        return (
                             <div className="tests" onClick={addQuestions(i.test_name)}>
                                 <div id="test_name">{i.test_name}</div>
                                 <div id="test_author">Test author: {i.test_author}</div>
                                 <div id="no_of_questions">No. of Questions: {i.no_of_questions}</div>
                             </div>
-                        </div>
-                    )
-                })}
+                        )
+                    })}
+                </div>
             </div>
         </div>
     )

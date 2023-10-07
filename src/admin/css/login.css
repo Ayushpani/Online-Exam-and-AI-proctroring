@@ -3,12 +3,20 @@
 	justify-content: center;
 	align-items: center;
 	height: 100vh;
-    background-image: url("../../images/app_bg.jpeg");
+    background-image: url("../../images/container2.jpg");
     background-repeat: no-repeat;
     background-size:cover;
 }
-h1{
+.container1{
+    background-color: rgba(15, 157, 193, 0.242);
+    border-radius: 60px;
+    width: 450px;
+
+}
+.login_heading{
     padding: 10px;
+    color: aliceblue;
+    
 }
 #email, #password{
     text-align: center;
@@ -19,10 +27,10 @@ h1{
     margin: 10px;
 }
 #submit{
-    font-size: 15px;
+    font-size: 20px;
     height: 40px;
-    width: 60px;
+    width: 100px;
     border-radius: 10px;
     margin: 10px;
-    background-color: lightgreen;
+    background-color: rgb(102, 226, 240);
 }
