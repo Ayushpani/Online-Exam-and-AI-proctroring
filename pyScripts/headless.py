@@ -34,6 +34,8 @@ class Proctoring():
             print("Error sending data")
     
     def video_feed(self):
+        phone_status = 0
+        people_count = 0
         while True:
             ret, frame = self.camera.read()
             results = self.objDetect.score_frame(frame)
@@ -42,18 +44,29 @@ class Proctoring():
             # cv2.imshow('window', frame)
             
             if phone_status == 1:
-                self.send_response("phone_status", 1)
+                break
             
             if people_count == 0:
-                self.send_response("people_count", 0)
+                break
             
             if people_count > 1:
-                self.send_response("people_count", 2)
+                break
             
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 self.camera.release()
                 cv2.destroyAllWindows()
                 break
+        
+        if phone_status == 1:
+            self.send_response("phone_status", 1)
+        
+        if people_count == 0:
+            self.send_response("people_count", 0)
+        
+        if people_count > 1:
+            self.send_response("people_count", 2)
+        
+        self.video_feed()
 
 if __name__ == "__main__":
     proc = Proctoring()

@@ -21,6 +21,9 @@
     font-weight: bolder;
     font-size: 20px;
     margin: 10px;
+    border-radius: 10px;
+    height: 50px;
+    width: 200px;
 }
 .label .textbox{
     display: flex;
@@ -66,10 +69,14 @@
     width: 200px;
 }
 .add_contributor{
+    padding-left: 8px;
+    padding-right: 8px;
     cursor: pointer;
+    border-radius: 10px;
     font-weight: bolder;
     font-size: 20px;
     margin: 10px;
+    
 }
 .add_contributor_popup{
     border: 1px solid black;
@@ -107,4 +114,13 @@
 .question_information_table{
     text-align: center;
     font-size: 25px;
+}
+
+.addQuestions #nav{
+    display: flex;
+    flex-direction: row;
+}
+
+.tAuthor{
+    font-weight: bolder;
 }

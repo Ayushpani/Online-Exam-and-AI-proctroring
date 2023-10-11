@@ -33,25 +33,25 @@ const TermsAndConditions = () => {
           <p className={styles.dosGeneralGuidelinesContainer}>
             <span className={styles.dos}>
               <span>
-                <b>Do's</b>
-                GENERAL GUIDELINES
-                  • Make sure you are signed in with your Email/ Phone Number and Password and you have downloaded the test.
-                  • Ensure that the battery in your device is sufficiently charged for serving 3 hrs before starting the test. We recommend your device is on charging mode during the test.
-                  • Make sure you are on Airplane mode before starting the test to avoid disturbance.
-                  • Please ensure you sync to the internet to see your result and score improvement report.
+                <b>Do's</b> <br/>
+                GENERAL GUIDELINES <br/>
+                  • Make sure you are signed in with your Email/ Phone Number and Password and you have downloaded the test.<br/>
+                  • Ensure that the battery in your device is sufficiently charged for serving 3 hrs before starting the test. We recommend your device is on charging mode during the test. <br/>
+                  • Make sure you are on Airplane mode before starting the test to avoid disturbance. <br/>
+                  • Please ensure you sync to the internet to see your result and score improvement report. <br/>
 
-                  While taking the test
+                  While taking the test <br/>
 
-                  • Make sure you begin the test with a plan. Start with your strongest section.
-                  • Go through the entire paper and attempt the questions you know first.
-                  • Make sure you save at least 20-30 mins in the end to revisit your answers. In an online test, you can change your answer at any time.
+                  • Make sure you begin the test with a plan. Start with your strongest section. <br/>
+                  • Go through the entire paper and attempt the questions you know first. <br/>
+                  • Make sure you save at least 20-30 mins in the end to revisit your answers. In an online test, you can change your answer at any time. <br/>
 
-                  <b>Don'ts</b>
-                  GENERAL GUIDELINES
-                  • Don't change the date and time of the device in between the test otherwise, it will get auto-submitted.
-                  • Don't switch to Web or app for the same test once you started in the current app.
-                  • Don't submit the test before time.
-                  Try to use the entire duration of the test wisely.
+                  <b>Don'ts</b> <br/>
+                  GENERAL GUIDELINES <br/>
+                  • Don't change the date and time of the device in between the test otherwise, it will get auto-submitted. <br/>
+                  • Don't switch to Web or app for the same test once you started in the current app. <br/>
+                  • Don't submit the test before time. 
+                  Try to use the entire duration of the test wisely. <br/>
               </span>
             </span>
             <span className={styles.dos}>

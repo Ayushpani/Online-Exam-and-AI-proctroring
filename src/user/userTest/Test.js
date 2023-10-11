@@ -101,7 +101,7 @@ function Test() {
         };
     }, []);
 
-    {/*useEffect(() => {
+    useEffect(() => {
         try{
             axios.post("http://localhost:8000/test/proctoring")
             .then(res => {
@@ -144,7 +144,7 @@ function Test() {
                 console.log(e);
             })
         }, 1000)
-    });*/}
+    });
 
     const updateAnswered = (index, value) => {
         const updatedAnswered = [...answered];

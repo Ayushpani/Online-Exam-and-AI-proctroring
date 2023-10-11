@@ -5,6 +5,7 @@ import Popup from 'reactjs-popup';
 import AWS from 'aws-sdk';
 import 'reactjs-popup/dist/index.css';
 import "./css/addQuestions.css";
+import logo from "../images/website_logo.jpeg"
 
 function AddQuestions() {
 
@@ -56,7 +57,7 @@ function AddQuestions() {
         })
         .then( res => {
             if (res.data == "no test"){
-                history("/Home/existingTest", { state: { id: email } })
+                history("/Home/existingTest", { state: { id: location.state.email_id } })
                 alert("The test was deleted")
             }
             else{
@@ -64,6 +65,15 @@ function AddQuestions() {
             }
         })
     })
+
+    const handleLogout = () => {
+        history(location.pathname, { replace: true });
+        history("/Login")
+    }
+
+    const Test = () => {
+        history("/Home/existingTest", { state: { id: email} });
+    }
 
     const config = {
         bucketName: process.env.REACT_APP_BUCKET_NAME,
@@ -259,13 +269,18 @@ function AddQuestions() {
     
     return (
         <div className="addQuestions">
-            <div className="title">
-                <h1>Add questions to {test_name}</h1>
+            <div id="nav">
+                <div id="nav_logo">
+                    <img id="logo" src={logo} alt="website_logo" />
+                    <figcaption id="logo_caption">Quizwizard</figcaption>
+                </div>
+                <input type="button" onClick={Test} className="nav_btn" value="Test" />
+                <input type="button" onClick={handleLogout} className="nav_btn" value="Log out" />
             </div>
             <div className="existing_questions">
                 <div>
-                    <p>Test author: {author_email}</p>
-                    <p>Contributors:
+                    <span className='tAuthor'>Test author: </span>{author_email}
+                    <p className='tAuthor'>Contributors:
                         { contributors.map(i => {
                             return(
                                 <ol type = "a">
@@ -321,9 +336,9 @@ function AddQuestions() {
                 </table>
             </div>
             <Popup className="popup" trigger=
-                {<div className="add">
+                {<button className="add">
                     &#43; Add New Questions
-                </div>}
+                </button>}
                 modal nested>
                 <form name="question_details">
                     <div className="question_no">

@@ -21,11 +21,11 @@ const Menu = ({email}) => {
 }
 
 const Navbar = ({email}) => {
-  const [toggleMenu, setToggleMenu] = useState(false)
+  {/*const [toggleMenu, setToggleMenu] = useState(false)
   const history = useNavigate();
   function adminLogin(){
     history("/Login")
-  }
+  }*/}
   return (
     <div className = "quiz__navbar">
       <div className="quiz__navbar-links">
@@ -36,7 +36,7 @@ const Navbar = ({email}) => {
           <Menu email = {email}/>
         </div>
       </div>
-      <div className="quiz__navbar-sign">
+      {/**<div className="quiz__navbar-sign">
         <p>Sign in</p>
         <button type="button" onClick = {adminLogin}><span>Sign up</span></button>
       </div>
@@ -56,7 +56,7 @@ const Navbar = ({email}) => {
         </div>
         )}
         
-      </div>
+        </div>**/}
     </div>
   );
 }
