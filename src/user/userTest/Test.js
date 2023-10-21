@@ -38,7 +38,7 @@ function Test() {
         secretAccessKey: process.env.REACT_APP_SECRET
     }
 
-    const user_image = "https://" + config.bucketName + ".s3." + config.region + ".amazonaws.com/people_images/" + email + ".jpg";
+    const user_image = "https://" + config.bucketName + ".s3." + config.region + ".amazonaws.com/people_images/" + email + ".jpg" + `?${new Date().getTime()}`;
 
     useEffect(() => {
         const countdownInterval = setInterval(() => {

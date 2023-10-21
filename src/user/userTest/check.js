@@ -53,7 +53,7 @@ function Check() {
             .then((response) => response.json())
             .then((data) => {
                 console.log(data.message);
-                capture.src = "https://" + config.bucketName + ".s3." + config.region + ".amazonaws.com/people_images/" + email + ".jpg";
+                capture.src = "https://" + config.bucketName + ".s3." + config.region + ".amazonaws.com/people_images/" + email + ".jpg" + `?${new Date().getTime()}`;
             })
     }
 
