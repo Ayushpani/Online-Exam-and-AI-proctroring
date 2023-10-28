@@ -1,0 +1,50 @@
+.mainbody {
+    background-image: url("../imagesProj/bgresult.jpg");
+    background-repeat: no-repeat;
+    height: 100vh;
+}
+
+.table_summary {
+    color: black;
+    border-radius: 0%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.data {
+    color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.table1 {
+    background-color: antiquewhite;
+}
+
+.table2 {
+    background-color: antiquewhite;
+}
+
+.return_to_attempt_div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.return_to_attempt{
+    font-size: large;
+    height: 50px;
+    width: 200px;
+}
+
+.return_to_attempt:hover{
+    cursor: pointer;
+    background-color: lightskyblue;
+}

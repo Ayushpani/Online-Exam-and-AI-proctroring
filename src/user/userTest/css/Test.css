@@ -23,6 +23,28 @@
     height: fit-content;
 }
 
+.alert{
+    height: 400px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(235, 225, 225);
+}
+
+.alert_message{
+    font-size: large;
+    font-weight: bolder;
+    margin: 20px;
+}
+
+.alert_button{
+    background-color: rgb(141, 130, 238);
+    height: 30px;
+    width: 70px;
+}
+
 .question_div{
     float: left;
     margin-left: 20px;

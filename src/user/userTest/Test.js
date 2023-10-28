@@ -28,6 +28,8 @@ function Test() {
     const [visited, setVisited] = useState([]);
     const [tabImage, setTabImage] = useState([]);
     const [reload, setReload] = useState(0);
+    const [proctorAlert, setAlert] = useState(false);
+    const [message, setMessage] = useState('');
 
     const history = useNavigate();
 
@@ -96,53 +98,61 @@ function Test() {
 
         window.addEventListener('beforeunload', handleReload);
 
-        return() => {
+        return () => {
             window.removeEventListener('beforeunload', handleReload);
         };
     }, []);
 
     useEffect(() => {
-        try{
+        try {
             axios.post("http://localhost:8000/test/proctoring")
-            .then(res => {
-                if (res.data == "error"){
-                    alert("There was some error executing the proctoring script");
-                }
-                else{
-                    console.log("headless.py executed successfully");
-                }
-            })
-            .catch(e => {
-                console.log(e);
-            })
+                .then(res => {
+                    if (res.data == "error") {
+                        alert("There was some error executing the proctoring script");
+                    }
+                    else {
+                        console.log("headless.py executed successfully");
+                    }
+                })
+                .catch(e => {
+                    console.log(e);
+                })
         }
-        catch(e){
+        catch (e) {
             console.log(e);
         }
     }, []);
-    
+
     useEffect(() => {
         const proctor = setInterval(() => {
+            console.log("Hi there");
             axios.post("http://localhost:8000/test/proctor_data")
-            .then(res => {
-                if (res.data != null){
-                    if (res.data["phone_status"] == 1){
-                        alert('Mobile phone detected');
+                .then(res => {
+                    if (res.data != null) {
+                        if (res.data["phone_status"] == 1) {
+                            console.log("Phone status is 1");
+                            setShowTest(false);
+                            setAlert(true);
+                            setMessage('Malicious activity detected');
+                        }
+                        if (res.data["people_count"] == 0) {
+                            setShowTest(false);
+                            setAlert(true);
+                            setMessage('Malicious activity detected');
+                        }
+                        if (res.data["people_count"] == 2) {
+                            setShowTest(false);
+                            setAlert(true);
+                            setMessage('Malicious activity detected');
+                        }
+                        else {
+                            console.log(res.data);
+                        }
                     }
-                    if (res.data["people_count"] == 0){
-                        alert('No person detected');
-                    }
-                    if (res.data["people_count"] == 2){
-                        alert('More than one person detected');
-                    }
-                    else{
-                        console.log(res.data);
-                    }
-                }
-            })
-            .catch(e => {
-                console.log(e);
-            })
+                })
+                .catch(e => {
+                    console.log(e);
+                })
         }, 1000)
     });
 
@@ -182,30 +192,44 @@ function Test() {
         setTabImage(updatedTabImage);
     };
 
+    const handleAlert = async() => {
+        setAlert(false);
+        setShowTest(true);
+        const resume = 1;
+        try{
+            await axios.post("http://localhost:8000/resume/response", {
+                resume
+            });
+        }
+        catch(e) {
+            console.log(e);
+        }
+    }
+
     const handleTabClick = (index) => {
         const changeImage = document.getElementById(activeQn);
         if (MFRed[activeQn] == 1 || ansMFRed[activeQn] == 1 || answered[activeQn] == 1) {
 
         }
         else if (selectedOptions[activeQn] === '') {
-            {/* Updating the visited array */}
+            {/* Updating the visited array */ }
             updateVisited(activeQn, 1);
 
-            {/* Updating the not answered array */}
+            {/* Updating the not answered array */ }
             updateNotAnsed(activeQn, 1);
-            
-            {/* Code to update the array of tab images */}
+
+            {/* Code to update the array of tab images */ }
             updateTabImage(activeQn, notAns)
             changeImage.src = notAns;
         }
         else {
-            {/* Updating the answered array */}
+            {/* Updating the answered array */ }
             updateAnswered(activeQn, 1)
 
-            {/* Updating the visited  array */}
+            {/* Updating the visited  array */ }
             updateVisited(activeQn, 1)
-            
-            {/* Updating the array of tab images */}
+
+            {/* Updating the array of tab images */ }
             updateTabImage(activeQn, ans)
             changeImage.src = ans;
         }
@@ -236,7 +260,7 @@ function Test() {
             setActiveQn(updatedActiveQn);
             return;
         }
-        else if (MFRed[activeQn] == 1){
+        else if (MFRed[activeQn] == 1) {
             updateMFR(activeQn, 0);
         }
         else if (ansMFRed[activeQn] == 1) {
@@ -248,11 +272,11 @@ function Test() {
 
         updateAnswered(activeQn, 1);
 
-        {/* Code to update the array of tab images */}
+        {/* Code to update the array of tab images */ }
         updateTabImage(activeQn, ans)
         changeImage.src = ans;
 
-        if (visited[activeQn] == 0){
+        if (visited[activeQn] == 0) {
             updateVisited(activeQn, 1);
         }
         const updatedActiveQn = activeQn + 1;
@@ -269,7 +293,7 @@ function Test() {
         if (answered[activeQn] == 1) {
             updateAnswered(activeQn, 0);
         }
-        else if (MFRed[activeQn] == 1){
+        else if (MFRed[activeQn] == 1) {
             const updatedActiveQn = activeQn + 1;
             if ((updatedActiveQn + 1) > questions.length) {
                 alert("No more questions please submit");
@@ -287,11 +311,11 @@ function Test() {
 
         updateMFR(activeQn, 1);
 
-        {/* Code to update the array of tab images */}
+        {/* Code to update the array of tab images */ }
         updateTabImage(activeQn, MFR)
         changeImage.src = MFR;
 
-        if (visited[activeQn] == 0){
+        if (visited[activeQn] == 0) {
             updateVisited(activeQn, 1);
         }
         const updatedActiveQn = activeQn + 1;
@@ -313,7 +337,7 @@ function Test() {
         if (answered[activeQn] == 1) {
             updateAnswered(activeQn, 0);
         }
-        else if (MFRed[activeQn] == 1){
+        else if (MFRed[activeQn] == 1) {
             updateMFR(activeQn, 0);
         }
         else if (ansMFRed[activeQn] == 1) {
@@ -331,11 +355,11 @@ function Test() {
 
         updateAnsMFR(activeQn, 1);
 
-        {/* Code to update the array of tab images */}
+        {/* Code to update the array of tab images */ }
         updateTabImage(activeQn, ansMFR)
         changeImage.src = ansMFR;
 
-        if (visited[activeQn] == 0){
+        if (visited[activeQn] == 0) {
             updateVisited(activeQn, 1);
         }
         const updatedActiveQn = activeQn + 1;
@@ -356,21 +380,21 @@ function Test() {
         if (ansMFRed[activeQn] == 1) {
             updateAnsMFR(activeQn, 0);
         }
-        if (MFRed[activeQn] == 1){
+        if (MFRed[activeQn] == 1) {
             updateMFR(activeQn, 0);
         }
-        if (answered[activeQn] == 1){
+        if (answered[activeQn] == 1) {
             updateAnswered(activeQn, 0);
         }
 
         updateNotAnsed(activeQn, 1);
 
-        {/* Updating the options array */}
+        {/* Updating the options array */ }
         const updatedSelectedOptions = [...selectedOptions];
         updatedSelectedOptions[activeQn] = '';
         setSelectedOptions(updatedSelectedOptions);
 
-        {/* Code to update the array of tab images */}
+        {/* Code to update the array of tab images */ }
         updateTabImage(activeQn, notAns);
         changeImage.src = notAns;
     };
@@ -382,12 +406,12 @@ function Test() {
 
     const handleYes = () => {
         axios.post("http://localhost:8000/test/kill")
-        .then(res => {
-            history("/test");
-        })
-        .catch(e => {
-            console.log(e);
-        })
+            .then(res => {
+                history("/test/result", { state: { id: email, test_name: test_name, answers: selectedOptions } });
+            })
+            .catch(e => {
+                console.log(e);
+            })
     }
 
     const handleNo = () => {
@@ -422,6 +446,12 @@ function Test() {
                 </div>
             </div>
             <br />
+            {proctorAlert && (
+                <div className="alert">
+                    <p className = "alert_message">{message}</p>
+                    <button  className = "alert_button" onClick={handleAlert}>OK</button>
+                </div>
+            )}
             {showTest && (
                 <div className="body">
                     <div className="question_div">
@@ -501,18 +531,18 @@ function Test() {
                 </div>
             )}
             {showSummary && (
-                <div className = "summary_div">
-                    <h2 className = "summary_header">Exam Summary</h2>
-                    <br/>
-                    <table border = "1" cellSpacing = "0">
+                <div className="summary_div">
+                    <h2 className="summary_header">Exam Summary</h2>
+                    <br />
+                    <table border="1" cellSpacing="0">
                         <tr>
-                            <th className = "summary_table_header noq" >No. of Questions</th>
-                            <th className = "summary_table_header ans" >Answered</th>
-                            <th className = "summary_table_header notAns" >Not Answered</th>
-                            <th className = "summary_table_header MFR" >Marked for Review</th>
-                            <th className = "summary_table_header ansMFR" >Answered and Marked for Review<br/>
-                            (will be considered for evaluation)</th>
-                            <th className = "summary_table_header notVis" >Not Visited</th>
+                            <th className="summary_table_header noq" >No. of Questions</th>
+                            <th className="summary_table_header ans" >Answered</th>
+                            <th className="summary_table_header notAns" >Not Answered</th>
+                            <th className="summary_table_header MFR" >Marked for Review</th>
+                            <th className="summary_table_header ansMFR" >Answered and Marked for Review<br />
+                                (will be considered for evaluation)</th>
+                            <th className="summary_table_header notVis" >Not Visited</th>
                         </tr>
                         <tr>
                             <td>{questions.length}</td>
@@ -523,14 +553,14 @@ function Test() {
                             <td>{questions.length - visited.reduce((accumulator, currentValue) => accumulator + currentValue, 0)}</td>
                         </tr>
                     </table>
-                    <br/>
-                    <div className = "return_back_to_test_div">
-                        <p className = "question_for_next_step">Are you sure you want to submit for final marking?<br/>
-                        No changes will be allowed after submission.</p>
-                        <br/>
-                        <div className = "next_step_buttons">
-                            <button className = "next_button yes" onClick = {handleYes} >Yes</button>&nbsp;&nbsp;
-                            <button className = "next_button no" onClick = {handleNo}>No</button>
+                    <br />
+                    <div className="return_back_to_test_div">
+                        <p className="question_for_next_step">Are you sure you want to submit for final marking?<br />
+                            No changes will be allowed after submission.</p>
+                        <br />
+                        <div className="next_step_buttons">
+                            <button className="next_button yes" onClick={handleYes} >Yes</button>&nbsp;&nbsp;
+                            <button className="next_button no" onClick={handleNo}>No</button>
                         </div>
                     </div>
                 </div>
