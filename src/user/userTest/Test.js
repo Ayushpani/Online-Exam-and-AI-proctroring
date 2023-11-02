@@ -43,50 +43,25 @@ function Test() {
 
     const user_image = "https://" + config.bucketName + ".s3." + config.region + ".amazonaws.com/people_images/" + email + ".jpg" + `?${new Date().getTime()}`;
 
-    var alertCounter = 0;
-
-    // Cross-browser function to get the visibility state of the page
-    function getVisibilityState() {
-        if (typeof document.hidden !== "undefined") {
-            return document.hidden ? "hidden" : "visible";
-        } else if (typeof document.msHidden !== "undefined") {
-            return document.msHidden ? "hidden" : "visible";
-        } else if (typeof document.webkitHidden !== "undefined") {
-            return document.webkitHidden ? "hidden" : "visible";
-        }
-    }
-
-    // Handle visibility change
-    function handleVisibilityChange() {
-        var visibilityState = getVisibilityState();
-
-        if (visibilityState === "visible") {
-            // Tab is active, do nothing
-        } else {
-            // Tab is switched, generate an alert
-            alertCounter++;
-            alert("You switched to another tab! Alert " + alertCounter + " of 3.");
-
-            if (alertCounter === 3) {
-                // Auto-submit the test after 3 alerts
-                Kill();
-                history("/test", { state: { id: email }});
+    document.addEventListener('visibilitychange',
+        function () {
+            if (document.visibilityState === 'visible') {
+                document.title = "Active Tab";
             }
-        }
-    }
+            else {
+                document.title = "inactive tab";
+            }
+            if (document.title === "inactive tab") {
+                closeWindow();
 
-    {/*// Function to simulate test submission
-    function submitTest() {
-        alert("Test submitted automatically after 3 alerts.");
-        // Add code here to actually submit the test, e.g., sending data to the server
-    }*/}
-
-    // Attach the visibility change event listener
-    if (typeof document.addEventListener === "undefined" || typeof document.hidden === "undefined") {
-        console.log("Page Visibility API is not supported in this browser.");
-    } else {
-        document.addEventListener("visibilitychange", handleVisibilityChange, false);
-    }
+            }
+            function closeWindow() {
+                setTimeout(() => {
+                    Kill();
+                    history("/test", { state: { id: email }});
+                }, 60000);
+            }
+        });
 
     useEffect(() => {
         const countdownInterval = setInterval(() => {
