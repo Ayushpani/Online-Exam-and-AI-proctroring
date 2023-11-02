@@ -30,6 +30,7 @@ function Test() {
     const [reload, setReload] = useState(0);
     const [proctorAlert, setAlert] = useState(false);
     const [message, setMessage] = useState('');
+    const [no_of_alerts, setNo_of_alerts] = useState(0);
 
     const history = useNavigate();
 
@@ -41,6 +42,51 @@ function Test() {
     }
 
     const user_image = "https://" + config.bucketName + ".s3." + config.region + ".amazonaws.com/people_images/" + email + ".jpg" + `?${new Date().getTime()}`;
+
+    var alertCounter = 0;
+
+    // Cross-browser function to get the visibility state of the page
+    function getVisibilityState() {
+        if (typeof document.hidden !== "undefined") {
+            return document.hidden ? "hidden" : "visible";
+        } else if (typeof document.msHidden !== "undefined") {
+            return document.msHidden ? "hidden" : "visible";
+        } else if (typeof document.webkitHidden !== "undefined") {
+            return document.webkitHidden ? "hidden" : "visible";
+        }
+    }
+
+    // Handle visibility change
+    function handleVisibilityChange() {
+        var visibilityState = getVisibilityState();
+
+        if (visibilityState === "visible") {
+            // Tab is active, do nothing
+        } else {
+            // Tab is switched, generate an alert
+            alertCounter++;
+            alert("You switched to another tab! Alert " + alertCounter + " of 3.");
+
+            if (alertCounter === 3) {
+                // Auto-submit the test after 3 alerts
+                Kill();
+                history("/test", { state: { id: email }});
+            }
+        }
+    }
+
+    {/*// Function to simulate test submission
+    function submitTest() {
+        alert("Test submitted automatically after 3 alerts.");
+        // Add code here to actually submit the test, e.g., sending data to the server
+    }*/}
+
+    // Attach the visibility change event listener
+    if (typeof document.addEventListener === "undefined" || typeof document.hidden === "undefined") {
+        console.log("Page Visibility API is not supported in this browser.");
+    } else {
+        document.addEventListener("visibilitychange", handleVisibilityChange, false);
+    }
 
     useEffect(() => {
         const countdownInterval = setInterval(() => {
@@ -54,6 +100,8 @@ function Test() {
             }
             else {
                 clearInterval(countdownInterval);
+                Kill();
+                history("/test/result", { state: { id: email, test_name: test_name, answers: selectedOptions } });
             }
         }, 1000)
 
@@ -124,23 +172,48 @@ function Test() {
     }, []);
 
     useEffect(() => {
+        if (no_of_alerts == 3) {
+            Kill();
+            history("/test", { state: { id: email } });
+            return;
+        }
         const proctor = setInterval(() => {
             console.log("Hi there");
             axios.post("http://localhost:8000/test/proctor_data")
                 .then(res => {
                     if (res.data != null) {
                         if (res.data["phone_status"] == 1) {
-                            console.log("Phone status is 1");
+                            let updateAlert = no_of_alerts;
+                            setNo_of_alerts(updateAlert + 1);
+                            if ((updateAlert + 1) == 3) {
+                                Kill();
+                                history("/test", { state: { id: email } });
+                                return;
+                            }
                             setShowTest(false);
                             setAlert(true);
                             setMessage('Malicious activity detected');
                         }
                         if (res.data["people_count"] == 0) {
+                            let updateAlert = no_of_alerts;
+                            setNo_of_alerts(updateAlert + 1);
+                            if ((updateAlert + 1) == 3) {
+                                Kill();
+                                history("/test", { state: { id: email } });
+                                return;
+                            }
                             setShowTest(false);
                             setAlert(true);
                             setMessage('Malicious activity detected');
                         }
                         if (res.data["people_count"] == 2) {
+                            let updateAlert = no_of_alerts;
+                            setNo_of_alerts(updateAlert + 1);
+                            if ((updateAlert + 1) == 3) {
+                                Kill();
+                                history("/test", { state: { id: email } });
+                                return;
+                            }
                             setShowTest(false);
                             setAlert(true);
                             setMessage('Malicious activity detected');
@@ -155,6 +228,16 @@ function Test() {
                 })
         }, 1000)
     });
+
+    const Kill = () => {
+        axios.post("http://localhost:8000/test/kill")
+            .then(res => {
+                return;
+            })
+            .catch(e => {
+                console.log(e);
+            })
+    }
 
     const updateAnswered = (index, value) => {
         const updatedAnswered = [...answered];
@@ -192,16 +275,16 @@ function Test() {
         setTabImage(updatedTabImage);
     };
 
-    const handleAlert = async() => {
+    const handleAlert = async () => {
         setAlert(false);
         setShowTest(true);
         const resume = 1;
-        try{
+        try {
             await axios.post("http://localhost:8000/resume/response", {
                 resume
             });
         }
-        catch(e) {
+        catch (e) {
             console.log(e);
         }
     }
@@ -448,8 +531,8 @@ function Test() {
             <br />
             {proctorAlert && (
                 <div className="alert">
-                    <p className = "alert_message">{message}</p>
-                    <button  className = "alert_button" onClick={handleAlert}>OK</button>
+                    <p className="alert_message">{message}</p>
+                    <button className="alert_button" onClick={handleAlert}>OK</button>
                 </div>
             )}
             {showTest && (
