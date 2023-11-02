@@ -34,6 +34,10 @@ function Result() {
             })
     }, []);
 
+    const Print_btn = () => {
+        window.print();
+    }
+
     const values = (correct) => {
         let temp_attempted = attempted;
         let temp_incorrect = incorrect;
@@ -58,6 +62,7 @@ function Result() {
 
     return (
         <div className="mainbody">
+            <button id="printButton" onClick = {Print_btn}>Print Page</button>
             <div class="table_summary" >
                 <table border="5" cellspacing="0" align="center" width="50% " height="250" class="table1">
                     <tr>
@@ -66,7 +71,7 @@ function Result() {
 
                     <tr>
                         <td>Total Questions &#10173;</td>
-                        <td>{no_of_questions}</td>
+                        <td width = "60px">{no_of_questions}</td>
                         <td>Total Attempted &#10173;</td>
                         <td>{attempted}</td>
                     </tr>

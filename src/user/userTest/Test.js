@@ -17,7 +17,7 @@ function Test() {
     const test_name = location.state.test_name;
     const [minutes, setMinutes] = useState(0);
     const [seconds, setSeconds] = useState(0);
-    const [totalSeconds, setTotalSeconds] = useState(10 * 60);
+    const [totalSeconds, setTotalSeconds] = useState(2 * 60);
     const [questions, setQuestions] = useState([]);
     const [activeQn, setActiveQn] = useState(0);
     const [selectedOptions, setSelectedOptions] = useState([]);

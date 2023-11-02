@@ -1,7 +1,11 @@
 .mainbody {
     background-image: url("../imagesProj/bgresult.jpg");
+    background-size: cover;
     background-repeat: no-repeat;
-    height: 100vh;
+}
+
+.mainbody td{
+    padding-left: 25px;
 }
 
 .table_summary {
