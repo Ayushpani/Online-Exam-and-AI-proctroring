@@ -14,7 +14,7 @@ const Menu = ({email}) => {
   }
   return(
     <><p><a href="#home">Home</a></p>
-          <p><a href="#home">What is QuizWizard ?</a></p>
+          <p><a href="/aboutus">About us</a></p>
           <p onClick = {test}>Tests</p>
           </>
   )

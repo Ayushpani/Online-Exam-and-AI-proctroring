@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './footer.css';
 import logo2 from'../../assets/logo2.png';
 const Footer = () => {
@@ -25,7 +26,7 @@ const Footer = () => {
       <div className="quiz__footer-links_div">
       <div />
         <h4> Company</h4>
-        <a href='team'>Know The Team</a>
+        <Link to='/aboutus'>Know The Team</Link>
         <a href='contact us'>Contact us</a>
       </div>
       </div>

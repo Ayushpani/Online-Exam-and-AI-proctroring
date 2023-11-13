@@ -12,6 +12,7 @@ import AddQuestions from "./admin/addQuestions"
 import Signup from './user/Signup';
 import Signin from './user/Signin';
 import UserApp from './user/App';
+import About from './user/containers/aboutus/about'
 import Test from './user/userTest/Attempt';
 import Terms from './user/userTest/TermsAndConditions'
 import Check from './user/userTest/check'
@@ -34,6 +35,7 @@ root.render(
 				<Route path = "/Home/existingTest" element = {<ExistingTest/>} />
 				<Route path = "/Home/addQuestions" element = {<AddQuestions/>} />
 				<Route path='/Uhome' element={<UserApp />} />
+				<Route path='/aboutus' element={<About />} />
 				<Route path='/Signin' element={<Signin />} />
 				<Route path='/Signup' element={<Signup />} />
 				<Route path='/test' element={<Test />} />
