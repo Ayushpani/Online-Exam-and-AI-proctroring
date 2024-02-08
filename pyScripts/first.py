@@ -1,6 +1,7 @@
 from flask import Flask, Response, jsonify
 from flask_cors import CORS
-from decouple import config
+# from decouple import config
+from dotenv import load_dotenv
 import cv2
 import io
 import boto3
@@ -11,6 +12,11 @@ import os
 
 app = Flask(__name__)
 CORS(app)
+load_dotenv()
+AWS_ACCESS_KEY_ID = os.getenv('REACT_APP_ACCESS')
+AWS_SECRET_ACCESS_KEY = os.getenv('REACT_APP_SECRET')
+AWS_REGION = os.getenv('REACT_APP_REGION')
+bucket_name = os.getenv('REACT_APP_BUCKET_NAME')
 camera = cv2.VideoCapture(0)  # 0 for the default camera
 
 def handle_sigint(signum, frame):
@@ -29,10 +35,10 @@ def handle_sigint(signum, frame):
 signal.signal(signal.SIGINT, handle_sigint)
 signal.signal(signal.SIGTERM, handle_sigint)
 
-AWS_ACCESS_KEY_ID = config('REACT_APP_ACCESS')
-AWS_SECRET_ACCESS_KEY = config('REACT_APP_SECRET')
-AWS_REGION = config('REACT_APP_REGION')
-bucket_name = config('REACT_APP_BUCKET_NAME')
+# AWS_ACCESS_KEY_ID = config('REACT_APP_ACCESS')
+# AWS_SECRET_ACCESS_KEY = config('REACT_APP_SECRET')
+# AWS_REGION = config('REACT_APP_REGION')
+# bucket_name = config('REACT_APP_BUCKET_NAME')
 
 def generate_frames():
 
