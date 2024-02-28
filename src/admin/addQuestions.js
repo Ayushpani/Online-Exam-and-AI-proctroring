@@ -124,23 +124,22 @@ function AddQuestions() {
             })
             .promise();
 
-        await upload.then((err, data) => {
+        upload.then((err, data) => {
             console.log(err);
             alert("File uploaded successfully.");
         });
 
         setImage("https://" + config.bucketName + ".s3." + config.region + ".amazonaws.com/" + window.file.name);
-        await fupload();
-    }
-    
-    async function fupload() {
-
-        if(!qno || !question || !option){
-            alert("Enter the required details");
-            return false;
-        }
+        // if(!qno || !question || !option){
+        //     alert("Enter the required details");
+        //     return false;
+        // }
 
         try {
+            if(!qno || !question || !option){
+                alert("Enter the required details");
+                return false;
+            }
             await axios.post("http://localhost:8000/Home/addQuestions", {
                 test_name, qno, question, option
             })
@@ -148,6 +147,24 @@ function AddQuestions() {
         catch (e) {
             console.log(e);
         }
+        // await fupload();
+    }
+    
+    async function fupload() {
+
+        // if(!qno || !question || !option){
+        //     alert("Enter the required details");
+        //     return false;
+        // }
+
+        // try {
+        //     await axios.post("http://localhost:8000/Home/addQuestions", {
+        //         test_name, qno, question, option
+        //     })
+        // }
+        // catch (e) {
+        //     console.log(e);
+        // }
     }
 
     async function del(qn) {
