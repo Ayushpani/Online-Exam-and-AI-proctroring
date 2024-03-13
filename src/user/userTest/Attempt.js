@@ -21,7 +21,7 @@ const Attempt = () => {
       setData(res.data);
     })
     .catch(e => {
-      alert("There are no tests right now come back later");
+      alert("There are no tests available right now come back later");
     })
   }, [])
 
